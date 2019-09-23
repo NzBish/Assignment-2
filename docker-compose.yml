@@ -1,0 +1,43 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    env_file:
+     - mysql.env
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.extensions
+    image: php:7.3-apache-mysqli-339
+    env_file:
+     - mysql.env
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 0.0.0.0:8000:80
+    volumes:
+      - ./app:/var/www/html
+  composer:
+    image: "composer"
+    working_dir: /var/www/html
+    volumes:
+        - "./app:/var/www/html"
+    command: install
+    depends_on:
+      - web
+  myadmin:
+    image: phpmyadmin/phpmyadmin:4.8
+    ports:
+        - "8080:80"
+    env_file:
+     - phpmyadmin.env
+    restart: always
+    depends_on:
+        - db
+
+

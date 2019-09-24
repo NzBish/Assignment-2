@@ -12,3 +12,5 @@ amount,	transaction	type)
 • filtering	(e.g.	of	accounts	by	id	or	transactions	by	type)
 
 • sorting	of	transactions	by	date,	asc/desc	order
+
+also need an exception class

@@ -72,6 +72,8 @@ class Model
                                         PRIMARY KEY (trans_id),
                                         CONSTRAINT FK_account FOREIGN KEY (account_id) REFERENCES account(account_id) ON DELETE CASCADE);";
 
+
+
         $this->buildTable('user',$databaseUser);
         $this->buildTable('account',$databaseAccount);
         $this->buildTable('transaction',$databaseTransaction); 
@@ -102,17 +104,23 @@ class Model
 
         //strings to insert data
         $insertUser = "INSERT INTO `user` VALUES (NULL,'Chris', 'Bishop', $password, 'chris@gmail.com', '1111', '20/03/1972'),
-                                                 (NULL,'Mary','LittleLamb', $password, 'mary@gmail.com','2222', '01/01/2000');"
+                                                 (NULL,'Mary','LittleLamb', $password, 'mary@gmail.com','2222', '01/01/2000');";
 
-        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',1000000,1,'01/02/2003'),
-                                                       (NULL,'Credit Card',20,1,'02/02/2003'),
-                                                       (NULL,'Savings',300,2,'02/12/2018')
-                                                       (NULL,'CreditCard',-50,2,'02/12/2018');"
+        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,1,'01/02/2003'),
+                                                       (NULL,'CreditCard',20,1,'02/02/2003'),
+                                                       (NULL,'Savings',300,2,'02/12/2018'),
+                                                       (NULL,'CreditCard',50,2,'02/12/2018');";
 
         $insertTransaction = "INSERT INTO `transaction` VALUES (NULL,'Deposit',20,'25/09/2019',1),
-                                                               (NULL,'Withdraw',300,'2/02/2018'2),
+                                                               (NULL,'Withdraw',3,'2/02/2018',2),
                                                                (NULL,'Withdraw',40,'25/06/2019',3),
-                                                               (NULL,'Deposit',50,'25/09/2019',4);"
+                                                               (NULL,'Deposit',50,'25/09/2019',4);";
+
+
+         //check if already inserted
+        $result = $this->db->query("SELECT * FROM `user`;");
+
+        if ($result->num_rows == 0) {        
 
         if (!$this->db->query($insertUser)) {
                 // handle appropriately
@@ -126,5 +134,6 @@ class Model
                 // handle appropriately
                 error_log("Failed creating sample data!", 0);
             }
+        }
     }
 }

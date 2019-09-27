@@ -2,6 +2,7 @@
 namespace agilman\a2\model;
 
 use mysqli;
+use agilman\a2\exception\BankException;
 
 /**
  * Class Model
@@ -21,16 +22,16 @@ class Model
         $dbUser = $envs['MYSQL_USER'];
         $dbPass = $envs['MYSQL_PASSWORD'];
         $this->db = new mysqli(
-            $dbhost,
-            $dbUser,
-            $dbPass
-        );
+                $dbhost,
+                $dbUser,
+                $dbPass
+            );
 
-        if (!$this->db) {
-            // can't connect to MYSQL???
-            // handle it...
-            // e.g. throw new someException($this->db->connect_error, $this->db->connect_errno);
+        if (!$this->db)
+        {
+            throw new BankException($this->db->connect_error);
         }
+
 
         //----------------------------------------------------------------------------
         // This is to make our life easier
@@ -39,7 +40,7 @@ class Model
 
         if (!$this->db->select_db($dbName)) {
             // somethings not right.. handle it
-            error_log("Mysql database not available!", 0);
+            throw new BankException("Mysql database not available!");
         }      
 
         //defining strings for table creation
@@ -85,15 +86,15 @@ class Model
     }
     public function buildTable($tableName, $table)
     {
-        $result = $this->db->query("SHOW TABLES LIKE 'tableName';");
+        $result = $this->db->query("SHOW TABLES LIKE '$tableName';");
 
         if ($result->num_rows == 0) {
             // table doesn't exist
-            // create it and populate with sample data
+            // create it
             $result = $this->db->query($table);
             if (!$result) {
                 // handle appropriately
-                error_log("Failed creating table ".$tableName, 0);
+               throw new BankException("Failed creating table ".$tableName);
             }
         }
 
@@ -124,15 +125,15 @@ class Model
 
         if (!$this->db->query($insertUser)) {
                 // handle appropriately
-                error_log("Failed creating sample data!", 0);
+                throw new BankException("Failed creating sample data!");
             }
         if (!$this->db->query($insertAccount)) {
                 // handle appropriately
-                error_log("Failed creating sample data!", 0);
+                throw new BankException("Failed creating sample data!");
             }
         if (!$this->db->query($insertTransaction)) {
                 // handle appropriately
-                error_log("Failed creating sample data!", 0);
+                throw new BankException("Failed creating sample data!");
             }
         }
     }

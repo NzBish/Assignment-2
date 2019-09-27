@@ -56,12 +56,12 @@ class AccountModel extends Model
      */
     public function load($id)
     {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `id` = $id;")) {
+        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `account_id` = $id;")) {
             // throw new ...
         }
 
         $result = $result->fetch_assoc();
-        $this->name = $result['name'];
+        $this->name = $result['account_type'];
         $this->id = $id;
 
         return $this;

@@ -1,8 +1,12 @@
 <?php include "header.phtml" ?>
 <!---------- Body starts --------------->
-<h1>Welcome to ...</h1>
-The accounts are:
+
+<br>
 <table>
+    <tr>
+        <th>Account ID</th>
+        <th>Account Name</th>
+    </tr>
     <?php foreach ($accounts as $account) { ?>
     <tr>
         <td><?= $account->getId() ?></td>

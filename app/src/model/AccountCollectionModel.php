@@ -16,7 +16,7 @@ class AccountCollectionModel extends Model
     public function __construct()
     {
         parent::__construct();
-        if (!$result = $this->db->query("SELECT `id` FROM `account`;")) {
+        if (!$result = $this->db->query("SELECT `account_id` FROM `account`;")) {
             // throw new ...
         }
         $this->accountIds = array_column($result->fetch_all(), 0);

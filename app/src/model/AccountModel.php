@@ -1,6 +1,8 @@
 <?php
 namespace agilman\a2\model;
 
+use agilman\a2\Exception\BankException;
+
 /**
  * Class AccountModel
  *
@@ -16,7 +18,13 @@ class AccountModel extends Model
     /**
      * @var string Account Name
      */
-    private $name;
+    private $type;
+
+    private $balance;
+
+    private $user;
+
+    private $dateStarted;
 
 
     /**
@@ -27,23 +35,49 @@ class AccountModel extends Model
         return $this->id;
     }
 
-    /**
-     * @return string Account Name
-     */
-    public function getName()
+    public function getType()
     {
-        return $this->name;
+        return $this->type;
     }
 
-    /**
-     * @param string $name Account name
-     *
-     * @return $this AccountModel
-     */
-    public function setName(string $name)
+    public function setType(string $type)
     {
-        $this->name = $name;
+        $this->type = $type;
 
+        return $this;
+    }
+
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    public function setBalance(float $balance)
+    {
+        $this->balance = $balance;
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function setUser(int $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDateStarted()
+    {
+        return $this->dateStarted;
+    }
+
+    public function setDateStarted(string $date)
+    {
+        $this->dateStarted = $date;
         return $this;
     }
 
@@ -56,52 +90,91 @@ class AccountModel extends Model
      */
     public function load($id)
     {
-        if (!$result = $this->db->query("SELECT * FROM `account` WHERE `account_id` = $id;")) {
-            // throw new ...
+        if (!$result = $this->db->query(
+            "SELECT * FROM `account` WHERE `account_id` = $id;")) {
+            throw new BankException('No account found with id '.$id);
         }
-
-        $result = $result->fetch_assoc();
-        $this->name = $result['account_type'];
-        $this->id = $id;
+        if($result->num_rows > 0) {
+            $result = $result->fetch_assoc();
+            $this->id = $id;
+            $this->type = $result['account_type'];
+            $this->balance = $result['account_bal'];
+            $this->user = $result['user_id'];
+            $this->dateStarted = $result['account_dateStarted'];
+        }
 
         return $this;
     }
 
-    /**
-     * Saves account information to the database
-
-     * @return $this AccountModel
-     */
     public function save()
     {
-        $name = $this->name ?? "NULL";
+        $id = $this->id;
+        $type = $this->type ?? "NULL";
+        $balance = $this->balance ?? "NULL";
+        $user = $this->user ?? "NULL";
+        $dateStarted = $this->dateStarted ?? "NULL";
         if (!isset($this->id)) {
             // New account - Perform INSERT
-            if (!$result = $this->db->query("INSERT INTO `account` VALUES (NULL,'$name');")) {
-                // throw new ...
+            if (!$result = $this->db->query("INSERT INTO `account` VALUES
+                                        (NULL,'$type','$balance','$user','$dateStarted');")) {
+                throw new BankException("Insert account failed");
             }
             $this->id = $this->db->insert_id;
         } else {
             // saving existing account - perform UPDATE
-            if (!$result = $this->db->query("UPDATE `account` SET `name` = '$name' WHERE `id` = $this->id;")) {
-                // throw new ...
+            if (!$result = $this->db->query("UPDATE `account` SET
+                                        `account_type` = '$type',
+                                        `account_bal` = '$balance',
+                                        `user_id` = '$user',
+                                        `account_dateStarted` = '$dateStarted'
+                                         WHERE `id` = $id;")) {
+                throw new BankException("Update account failed");
             }
         }
 
         return $this;
     }
 
-    /**
-     * Deletes account from the database
-
-     * @return $this AccountModel
-     */
     public function delete()
     {
-        if (!$result = $this->db->query("DELETE FROM `account` WHERE `account`.`id` = $this->id;")) {
-            //throw new ...
+        if (!$result = $this->db->query("DELETE FROM `account` WHERE `account_id` = $this->id;")) {
+            throw new BankException("Delete account failed");
         }
 
         return $this;
     }
+
+    private function updateBalance() {
+        $id =  $this->id;
+        $balance = $this->balance;
+        if (!$result = $this->db->query(
+            "UPDATE `account`
+            SET `account_bal` = $balance
+            WHERE id = $id;"
+        )) {
+            throw new BankException('Error Updating Balance');
+        }
+    }
+
+    public function deposit($amount) {
+        $this->balance += $amount;
+        try {
+            $this->updateBalance();
+        }
+        catch (BankException $e) {
+            throw $e;
+        }
+    }
+
+    public function withdraw($amount) {
+        $this->balance -= $amount;
+        try {
+            $this->updateBalance();
+        }
+        catch (BankException $e) {
+            throw $e;
+        }
+    }
+
+
 }

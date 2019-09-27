@@ -10,7 +10,7 @@
     <?php foreach ($accounts as $account) { ?>
     <tr>
         <td><?= $account->getId() ?></td>
-        <td><?= $account->getName() ?></td>
+        <td><?= $account->getType() ?></td>
         <td><a href= <?= $linkTo('accountDelete', ['id' => $account->getId()]);?> >delete</a></td>
     </tr>
     <?php } ?>

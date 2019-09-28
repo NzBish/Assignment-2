@@ -30,35 +30,29 @@ class AccountController extends Controller
      */
     public function createAction()
     {
-        $account = new AccountModel();
-        if (isset($_POST['submitTransaction'])) {
+        if (isset($_POST['create'])) {
+            $account = new AccountModel();
             $account->setType($_POST['accountType']);
             $account->setUser($_POST['userID']);
             $account->setBalance(0.0);
             $account->setDateStarted(date("d/m/y"));
+            $account->save();
+            if(!$account)
+            {
+                throw new BankException("Failed to create account");
+            }
+            $view = new View('accountCreate');
+            echo $view->render();
+        } else{
+            $view = new View('accountCreate');
+            echo $view->render();
         }
-        try {
-                $account->save();
-
-        } catch (BankException $e) {
-
-        }
-        if(!$account){
-            throw new BankException("Failed to create account");
-        }
-        $view = new View('accountCreated');
-        echo $view->render();
-
-
     }
 
 
 
-    public function setupAction()
-    {
-        $view = new View('accountCreate');
-        echo $view->render();
-    }
+
+
 
     /**
      * Account Delete action

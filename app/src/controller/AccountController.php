@@ -1,6 +1,7 @@
 <?php
 namespace agilman\a2\controller;
 
+use agilman\a2\Exception\BankException;
 use agilman\a2\model\{AccountModel, AccountCollectionModel};
 use agilman\a2\view\View;
 
@@ -22,19 +23,41 @@ class AccountController extends Controller
         $view = new View('accountIndex');
         echo $view->addData('accounts', $accounts)->render();
     }
+
     /**
      * Account Create action
+     * @throws BankException
      */
     public function createAction()
     {
         $account = new AccountModel();
-        $names = ['Bob','Mary','Jon','Peter','Grace'];
-        shuffle($names);
-        $account->setName($names[0]); // will come from Form data
-        $account->save();
-        $id = $account->getId();
+        if (isset($_POST['submitTransaction'])) {
+            $account->setType($_POST['accountType']);
+            $account->setUser($_POST['userID']);
+            $account->setBalance(0.0);
+            $account->setDateStarted(date("d/m/y"));
+        }
+        try {
+                $account->save();
+
+        } catch (BankException $e) {
+
+        }
+        if(!$account){
+            throw new BankException("Failed to create account");
+        }
         $view = new View('accountCreated');
-        echo $view->addData('accountId', $id)->render();
+        echo $view->render();
+
+
+    }
+
+
+
+    public function setupAction()
+    {
+        $view = new View('accountCreate');
+        echo $view->render();
     }
 
     /**

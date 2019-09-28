@@ -6,11 +6,15 @@
     <tr>
         <th>Account ID</th>
         <th>Account Name</th>
+        <th>Account Balance</th>
+        <th>Date Started</th>
     </tr>
     <?php foreach ($accounts as $account) { ?>
     <tr>
         <td><?= $account->getId() ?></td>
         <td><?= $account->getType() ?></td>
+        <td><?= $account->getBalance() ?></td>
+        <td><?= $account->getDateStarted() ?></td>
         <td><a href= <?= $linkTo('accountDelete', ['id' => $account->getId()]);?> >delete</a></td>
     </tr>
     <?php } ?>

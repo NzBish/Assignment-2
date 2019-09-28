@@ -116,7 +116,8 @@ class AccountModel extends Model
         if (!isset($this->id)) {
             // New account - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `account` VALUES
-                                        (NULL,'$type','$balance','$user','$dateStarted');")) {
+                                        (NULL,'$type','$balance','$user','$dateStarted');"))
+            {
                 throw new BankException("Insert account failed");
             }
             $this->id = $this->db->insert_id;

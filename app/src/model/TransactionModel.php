@@ -86,7 +86,7 @@ class TransactionModel extends Model
 
     public function save()
     {
-       
+
         $type = $this->type ?? "NULL";
         $amount = $this->amount ?? "NULL";
         $dateTime = $this->datetime ?? "NULL";

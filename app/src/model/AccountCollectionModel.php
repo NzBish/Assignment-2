@@ -1,6 +1,8 @@
 <?php
 namespace agilman\a2\model;
 
+use agilman\a2\Exception\BankException;
+
 /**
  * Class AccountCollectionModel
  *
@@ -17,7 +19,7 @@ class AccountCollectionModel extends Model
     {
         parent::__construct();
         if (!$result = $this->db->query("SELECT `account_id` FROM `account`;")) {
-            // throw new ...
+            throw new BankException("Account db table is empty");
         }
         $this->accountIds = array_column($result->fetch_all(), 0);
         $this->N = $result->num_rows;

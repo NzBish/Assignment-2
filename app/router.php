@@ -61,5 +61,27 @@ $collection->attachRoute(
     )
 );
 
+$collection->attachRoute(
+    new Route(
+        '/transactions/',
+        array(
+            '_controller' => 'agilman\a2\controller\TransactionController::indexAction',
+            'methods' => 'GET',
+            'name' => 'transactionIndex'
+        )
+    )
+);
+
+$collection->attachRoute(
+    new Route(
+        '/users/',
+        array(
+            '_controller' => 'agilman\a2\controller\UserController::indexAction',
+            'methods' => 'GET',
+            'name' => 'userIndex'
+        )
+    )
+);
+
 $router = new Router($collection);
 $router->setBasePath('/');

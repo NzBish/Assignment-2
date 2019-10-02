@@ -53,33 +53,71 @@ class AccountController extends Controller
      * Account Delete action
      *
      * @param int $id Account id to be deleted
+     * @throws BankException
      */
     public function deleteAction($id)
     {
-        (new AccountModel())->load($id)->delete();
+        try {
+            (new AccountModel())->load($id)->delete();
+        } catch (BankException $e) {
+            throw new BankException(0);
+        }
         $view = new View('accountDeleted');
         echo $view->addData('accountId', $id)->render();
     }
+
     /**
      * Account Update action
      *
      * @param int $id Account id to be updated
+     * @throws BankException
      */
     public function updateAction($id)
     {
-        $account = (new AccountModel())->load($id);
+        try {
+            $account = (new AccountModel())->load($id);
+        } catch (BankException $e) {
+            throw new BankException(0);
+        }
         $account->setName('Joe')->save(); // new name will come from Form data
     }
 
-    public function depositAction($id, $amount)
+    public function depositAction($id)
     {
-        $account = (new AccountModel())->load($id);
-        $account->deposit();
+        if (isset($_POST['deposit'])) {
+            $account = (new AccountModel())->load($id);
+            $account->deposit($_POST['depositAmount']);
+            $account->save();
+            if(!$account)
+            {
+                throw new BankException(0);
+            }
+            $view = new View('accountDeposit');
+            echo $view->render();
+        } else{
+            $view = new View('accountDeposit');
+            echo $view->render();
+        }
+
     }
 
-    public function withdrawAction($id, $amount)
+
+    public function withdrawAction()
     {
-        $account = (new AccountModel())->load($id);
-        $account->withdraw($amount);
+        if (isset($_POST['withdraw'])) {
+            $account = (new AccountModel())->load($id);
+            $account->deposit($_POST['withdrawalAmount']);
+            $account->save();
+            if(!$account)
+            {
+                throw new BankException(0);
+            }
+            $view = new View('accountWithdraw');
+            echo $view->render();
+        } else{
+            $view = new View('accountWithdraw');
+            echo $view->render();
+        }
+
     }
 }

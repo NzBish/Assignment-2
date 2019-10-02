@@ -63,10 +63,10 @@ $collection->attachRoute(
 
 $collection->attachRoute(
     new Route(
-        '/account/withdraw/:id',
+        '/account/withdraw/',
         array(
             '_controller' => 'ktc\a2\controller\AccountController::withdrawAction',
-            'methods' => 'GET',
+            'methods' => array('GET', 'POST'),
             'name' => 'accountWithdraw'
         )
     )
@@ -74,10 +74,10 @@ $collection->attachRoute(
 
 $collection->attachRoute(
     new Route(
-        '/account/deposit/:id',
+        '/account/deposit/',
         array(
             '_controller' => 'ktc\a2\controller\AccountController::depositAction',
-            'methods' => 'GET',
+            'methods' => array('GET', 'POST'),
             'name' => 'accountDeposit'
         )
     )

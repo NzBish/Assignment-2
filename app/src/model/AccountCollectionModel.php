@@ -1,12 +1,12 @@
 <?php
-namespace agilman\a2\model;
+namespace ktc\a2\model;
 
-use agilman\a2\Exception\BankException;
+use ktc\a2\Exception\BankException;
 
 /**
  * Class AccountCollectionModel
  *
- * @package agilman/a2
+ * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountCollectionModel extends Model

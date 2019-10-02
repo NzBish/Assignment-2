@@ -1,8 +1,14 @@
 <?php
-namespace agilman\a2\model;
+namespace ktc\a2\model;
 
-use agilman\a2\Exception\BankException;
+use ktc\a2\Exception\BankException;
 
+/**
+ * Class TransactionModel
+ *
+ * @package ktc/a2
+ * @author
+ */
 class TransactionModel extends Model
 {
     private $id;

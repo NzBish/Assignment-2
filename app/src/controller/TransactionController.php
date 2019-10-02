@@ -2,7 +2,8 @@
 namespace ktc\a2\controller;
 
 use ktc\a2\Exception\BankException;
-use ktc\a2\model\{TransactionModel, TransactionCollectionModel};
+use ktc\a2\model\TransactionModel;
+use ktc\a2\model\TransactionCollectionModel;
 use ktc\a2\view\View;
 /**
  * Class TransactionController

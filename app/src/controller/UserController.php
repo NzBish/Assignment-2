@@ -2,7 +2,8 @@
 namespace ktc\a2\controller;
 
 use ktc\a2\Exception\BankException;
-use ktc\a2\model\{UserModel, UserCollectionModel};
+use ktc\a2\model\UserModel;
+use ktc\a2\model\UserCollectionModel;
 use ktc\a2\view\View;
 
 /**

@@ -54,9 +54,31 @@ $collection->attachRoute(
     new Route(
         '/account/update/:id',
         array(
-        '_controller' => 'ktc\a2\controller\AccountController::updateAction',
-        'methods' => 'GET',
-        'name' => 'accountUpdate'
+            '_controller' => 'ktc\a2\controller\AccountController::updateAction',
+            'methods' => 'GET',
+            'name' => 'accountUpdate'
+        )
+    )
+);
+
+$collection->attachRoute(
+    new Route(
+        '/account/withdraw/:id',
+        array(
+            '_controller' => 'ktc\a2\controller\AccountController::withdrawAction',
+            'methods' => 'GET',
+            'name' => 'accountWithdraw'
+        )
+    )
+);
+
+$collection->attachRoute(
+    new Route(
+        '/account/deposit/:id',
+        array(
+            '_controller' => 'ktc\a2\controller\AccountController::depositAction',
+            'methods' => 'GET',
+            'name' => 'accountDeposit'
         )
     )
 );

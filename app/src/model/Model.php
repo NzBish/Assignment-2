@@ -50,7 +50,7 @@ class Model
                                         `user_fName` VARCHAR(30) NOT NULL, 
                                         `user_lName` VARCHAR(30) NOT NULL,
                                         `user_pass` VARCHAR(30) NOT NULL,                         
-                                        `user_email` VARCHAR(30) NOT NULL,
+                                        `user_email` VARCHAR(80) NOT NULL,
                                         `user_phNumber` VARCHAR(30) NOT NULL,                                        
                                         `user_dob` VARCHAR(20) NOT NULL,
                                         Primary key (user_id));";

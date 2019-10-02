@@ -49,11 +49,6 @@ class AccountController extends Controller
         }
     }
 
-
-
-
-
-
     /**
      * Account Delete action
      *
@@ -74,5 +69,17 @@ class AccountController extends Controller
     {
         $account = (new AccountModel())->load($id);
         $account->setName('Joe')->save(); // new name will come from Form data
+    }
+
+    public function depositAction($id, $amount)
+    {
+        $account = (new AccountModel())->load($id);
+        $account->deposit();
+    }
+
+    public function withdrawAction($id, $amount)
+    {
+        $account = (new AccountModel())->load($id);
+        $account->withdraw($amount);
     }
 }

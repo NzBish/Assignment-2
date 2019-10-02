@@ -1,12 +1,12 @@
 <?php
-namespace agilman\a2\model;
+namespace ctk\a2\model;
 
-use agilman\a2\Exception\BankException;
+use ctk\a2\Exception\BankException;
 
 /**
  * Class AccountModel
  *
- * @package agilman/a2
+ * @package ctk/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountModel extends Model

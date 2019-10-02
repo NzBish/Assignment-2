@@ -1,10 +1,16 @@
 <?php
-namespace agilman\a2\controller;
+namespace ctk\a2\controller;
 
-use agilman\a2\Exception\BankException;
-use agilman\a2\model\{UserModel, UserCollectionModel};
-use agilman\a2\view\View;
+use ctk\a2\Exception\BankException;
+use ctk\a2\model\{UserModel, UserCollectionModel};
+use ctk\a2\view\View;
 
+/**
+ * Class UserController
+ *
+ * @package ctk/a2
+ * @author
+ */
 
 class UserController extends Controller
 {

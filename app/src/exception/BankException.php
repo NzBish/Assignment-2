@@ -1,7 +1,14 @@
 <?php
 
-namespace agilman\a2\Exception;
+namespace ctk\a2\Exception;
 
+/**
+ * Class BankException
+ *
+ * @package ctk/a2
+ *
+ * @author
+ */
 
 class BankException extends \Exception
 {

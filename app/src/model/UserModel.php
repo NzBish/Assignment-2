@@ -1,8 +1,14 @@
 <?php
-namespace agilman\a2\model;
+namespace ctk\a2\model;
 
-use agilman\a2\Exception\BankException;
+use ctk\a2\Exception\BankException;
 
+/**
+ * Class UserModel
+ *
+ * @package ctk/a2
+ * @author
+ */
 class UserModel extends Model
 {
     private $id;

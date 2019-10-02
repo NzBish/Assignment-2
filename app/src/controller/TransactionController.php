@@ -1,10 +1,15 @@
 <?php
-namespace agilman\a2\controller;
+namespace ctk\a2\controller;
 
-use agilman\a2\Exception\BankException;
-use agilman\a2\model\{TransactionModel, TransactionCollectionModel};
-use agilman\a2\view\View;
-
+use ctk\a2\Exception\BankException;
+use ctk\a2\model\{TransactionModel, TransactionCollectionModel};
+use ctk\a2\view\View;
+/**
+ * Class TransactionController
+ *
+ * @package ctk/a2
+ * @author
+ */
 
 class TransactionController extends Controller
 {

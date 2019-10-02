@@ -1,14 +1,14 @@
 <?php
-namespace agilman\a2\controller;
+namespace ctk\a2\controller;
 
-use agilman\a2\Exception\BankException;
-use agilman\a2\model\{AccountModel, AccountCollectionModel};
-use agilman\a2\view\View;
+use ctk\a2\Exception\BankException;
+use ctk\a2\model\{AccountModel, AccountCollectionModel};
+use ctk\a2\view\View;
 
 /**
  * Class AccountController
  *
- * @package agilman/a2
+ * @package ctk/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountController extends Controller

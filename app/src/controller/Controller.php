@@ -1,11 +1,11 @@
 <?php
 
-namespace agilman\a2\controller;
+namespace ctk\a2\controller;
 
 /**
  * Class Controller
  *
- * @package agilman/a2
+ * @package ctk/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class Controller

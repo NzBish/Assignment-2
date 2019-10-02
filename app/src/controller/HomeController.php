@@ -1,10 +1,10 @@
 <?php
-namespace ctk\a2\controller;
+namespace ktc\a2\controller;
 
 /**
  * Class HomeController
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class HomeController extends Controller

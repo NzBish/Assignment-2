@@ -1,14 +1,14 @@
 <?php
-namespace ctk\a2\controller;
+namespace ktc\a2\controller;
 
-use ctk\a2\Exception\BankException;
-use ctk\a2\model\{UserModel, UserCollectionModel};
-use ctk\a2\view\View;
+use ktc\a2\Exception\BankException;
+use ktc\a2\model\{UserModel, UserCollectionModel};
+use ktc\a2\view\View;
 
 /**
  * Class UserController
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author
  */
 

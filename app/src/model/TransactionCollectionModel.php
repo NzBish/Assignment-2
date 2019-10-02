@@ -1,14 +1,14 @@
 <?php
-namespace ctk\a2\model;
+namespace ktc\a2\model;
 
 
 
-use ctk\a2\Exception\BankException;
+use ktc\a2\Exception\BankException;
 
 /**
  * Class TransactionCollectionModel
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author
  */
 class TransactionCollectionModel extends Model

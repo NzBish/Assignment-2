@@ -1,14 +1,14 @@
 <?php
-namespace ctk\a2\controller;
+namespace ktc\a2\controller;
 
-use ctk\a2\Exception\BankException;
-use ctk\a2\model\{AccountModel, AccountCollectionModel};
-use ctk\a2\view\View;
+use ktc\a2\Exception\BankException;
+use ktc\a2\model\{AccountModel, AccountCollectionModel};
+use ktc\a2\view\View;
 
 /**
  * Class AccountController
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class AccountController extends Controller

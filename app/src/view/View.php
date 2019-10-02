@@ -6,16 +6,16 @@
  * Time: 4:38 PM
  */
 
-namespace ctk\a2\view;
+namespace ktc\a2\view;
 
-use const ctk\a2\APP_ROOT;
+use const ktc\a2\APP_ROOT;
 /**
  * Class View
  *
  * A wrapper for the view templates.
  * Limits the accessible scope available to phtml templates.
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class View

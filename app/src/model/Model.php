@@ -1,13 +1,13 @@
 <?php
-namespace ctk\a2\model;
+namespace ktc\a2\model;
 
 use mysqli;
-use ctk\a2\exception\BankException;
+use ktc\a2\exception\BankException;
 
 /**
  * Class Model
  *
- * @package ctk/a2
+ * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 class Model

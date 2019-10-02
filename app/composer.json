@@ -1,5 +1,5 @@
 {
-  "name": "ctk/a2",
+  "name": "ktc/a2",
   "version": "0.0.1",
   "description": "Massey University Internet Programming 159.339 Assignment 2",
   "repositories": [
@@ -17,7 +17,7 @@
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
-      "ctk\\a2\\": "src/"
+      "ktc\\a2\\": "src/"
     }
   }
 }

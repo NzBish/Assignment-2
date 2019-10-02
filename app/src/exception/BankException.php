@@ -1,11 +1,11 @@
 <?php
 
-namespace ctk\a2\Exception;
+namespace ktc\a2\Exception;
 
 /**
  * Class BankException
  *
- * @package ctk/a2
+ * @package ktc/a2
  *
  * @author
  */

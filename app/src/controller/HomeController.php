@@ -10,10 +10,14 @@ namespace agilman\a2\controller;
 class HomeController extends Controller
 {
     /**
-     * Account Index action
+     * Home Index action
      */
     public function indexAction()
     {
-        $this->redirect('accountIndex');
+        if (isset($_SESSION['userName'])) {
+            $this->redirect('accountIndex');
+        } else {
+            $this->redirect('userLogin');
+        }
     }
 }

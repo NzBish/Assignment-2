@@ -7,6 +7,8 @@ class UserModel extends Model
 {
     private $id;
 
+    private $userName;
+
     private $firstName;
 
     private $lastName;
@@ -24,6 +26,18 @@ class UserModel extends Model
         return $this->id;
     }
 
+    public function getUserName()
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName)
+    {
+        $this->userName = mysqli_real_escape_string($db, $userName);
+
+        return $this;
+    }
+
     public function getFirstName()
     {
         return $this->firstName;
@@ -31,7 +45,7 @@ class UserModel extends Model
 
     public function setFirstName(string $firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = mysqli_real_escape_string($db, $firstName);
 
         return $this;
     }
@@ -43,7 +57,7 @@ class UserModel extends Model
 
     public function setLastName(string $lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = mysqli_real_escape_string($db, $lastName);
         return $this;
     }
 
@@ -65,7 +79,7 @@ class UserModel extends Model
 
     public function setEmail(string $email)
     {
-        $this->email = $email;
+        $this->email = mysqli_real_escape_string($db, $email);
 
         return $this;
     }
@@ -77,7 +91,7 @@ class UserModel extends Model
 
     public function setPhone(string $phone)
     {
-        $this->phone = $phone;
+        $this->phone = mysqli_real_escape_string($db, $phone);
 
         return $this;
     }
@@ -89,26 +103,34 @@ class UserModel extends Model
 
     public function setDateOfBirth(string $date)
     {
-        $this->dateOfBirth = $date;
+        $this->dateOfBirth = mysqli_real_escape_string($db, $date);
 
         return $this;
     }
 
-    public function load($id)
+    public function check($userName)
+    {
+        return $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$userName';");
+    }
+
+    public function load($userName)
     {
         if (!$result = $this->db->query(
-            "SELECT * FROM `user` WHERE `user_id` = $id;")) {
-            throw new BankException('No user found with id '.$id);
+            "SELECT * FROM `user` WHERE `user_name` = '$userName';")) {
+            throw new BankException('No user found with username '.$userName);
         }
-        if($result->num_rows > 0) {
+        if ($result->num_rows == 1) {
             $result = $result->fetch_assoc();
-            $this->id = $id;
-            $this->firstName = $result['user_fName'];
-            $this->lastName = $result['user_lName'];
+            $this->id = $result['user_id'];
+            $this->userName = $userName;
+            $this->firstName = $result['user_first'];
+            $this->lastName = $result['user_last'];
             $this->password = $result['user_pass'];
             $this->email = $result['user_email'];
             $this->phone = $result['user_phNumber'];
             $this->dateOfBirth = $result['user_dob'];
+        } else {
+            throw new BankException('Username '.$userName.' is not unique');
         }
 
         return $this;
@@ -117,6 +139,7 @@ class UserModel extends Model
     public function save()
     {
         $id = $this->id;
+        $uName = $this->userName ?? "NULL";
         $fName = $this->firstName ?? "NULL";
         $lName = $this->lastName ?? "NULL";
         $password = $this->password ?? "NULL";
@@ -126,7 +149,7 @@ class UserModel extends Model
         if (!isset($this->id)) {
             // New user - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `user` VALUES
-                                        (NULL,'$fName','$lName','$password','$email','$phNumber','$dob');"))
+                                        (NULL,'$uName','$fName','$lName','$password','$email','$phNumber','$dob');"))
             {
                 throw new BankException("Insert user failed");
             }
@@ -134,8 +157,9 @@ class UserModel extends Model
         } else {
             // saving existing user - perform UPDATE
             if (!$result = $this->db->query("UPDATE `user` SET
-                                        `user_fName` = '$fName',
-                                        `user_lName` = '$lName',
+                                        `user_name` = '$uName',
+                                        `user_first` = '$fName',
+                                        `user_last` = '$lName',
                                         `user_pass` = '$password',
                                         `user_email` = '$email',
                                         `user_phNumber` = '$phNumber',

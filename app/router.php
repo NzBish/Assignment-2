@@ -83,5 +83,38 @@ $collection->attachRoute(
     )
 );
 
+$collection->attachRoute(
+    new Route(
+        '/users/login/',
+        array(
+            '_controller' => 'agilman\a2\controller\UserController::loginAction',
+            'methods' => array('GET','POST'),
+            'name' => 'userLogin'
+        )
+    )
+);
+
+$collection->attachRoute(
+    new Route(
+        '/users/logout/',
+        array(
+            '_controller' => 'agilman\a2\controller\UserController::logoutAction',
+            'methods' => 'GET',
+            'name' => 'userLogout'
+        )
+    )
+);
+
+$collection->attachRoute(
+    new Route(
+        '/users/create/',
+        array(
+            '_controller' => 'agilman\a2\controller\UserController::createAction',
+            'methods' => array('GET','POST'),
+            'name' => 'userCreate'
+        )
+    )
+);
+
 $router = new Router($collection);
 $router->setBasePath('/');

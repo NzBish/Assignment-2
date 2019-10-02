@@ -42,7 +42,7 @@ class AccountModel extends Model
 
     public function setType(string $type)
     {
-        $this->type = $type;
+        $this->type = mysqli_real_escape_string($db, $type);
 
         return $this;
     }
@@ -77,7 +77,7 @@ class AccountModel extends Model
 
     public function setDateStarted(string $date)
     {
-        $this->dateStarted = $date;
+        $this->dateStarted = mysqli_real_escape_string($db, $date);
         return $this;
     }
 

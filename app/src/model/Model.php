@@ -17,12 +17,12 @@ class Model
     public function __construct()
     {
         $envs = getenv();
-        $dbhost = $envs['MYSQL_HOST'];
+        $dbHost = $envs['MYSQL_HOST'];
         $dbName = $envs['MYSQL_DATABASE'];
         $dbUser = $envs['MYSQL_USER'];
         $dbPass = $envs['MYSQL_PASSWORD'];
         $this->db = new mysqli(
-                $dbhost,
+                $dbHost,
                 $dbUser,
                 $dbPass
             );
@@ -47,9 +47,10 @@ class Model
 
         $databaseUser = "CREATE TABLE `user` (
                                         `user_id` INT NOT NULL AUTO_INCREMENT, 
-                                        `user_fName` VARCHAR(30) NOT NULL, 
-                                        `user_lName` VARCHAR(30) NOT NULL,
-                                        `user_pass` VARCHAR(30) NOT NULL,                         
+                                        `user_name` VARCHAR(30) UNIQUE NOT NULL,
+                                        `user_first` VARCHAR(30) NOT NULL, 
+                                        `user_last` VARCHAR(30) NOT NULL,
+                                        `user_pass` VARCHAR(72) NOT NULL,                         
                                         `user_email` VARCHAR(30) NOT NULL,
                                         `user_phNumber` VARCHAR(30) NOT NULL,                                        
                                         `user_dob` VARCHAR(20) NOT NULL,
@@ -101,11 +102,17 @@ class Model
     }
     public function buildTableData()
     {
-        $password = "1111";
+        if (!$password = password_hash("1111", PASSWORD_BCRYPT)) {
+            throw new BankException("Failed to hash entered password");
+        }
+        if (!$admin = password_hash("admin", PASSWORD_BCRYPT)) {
+            throw new BankException("Failed to hash entered password");
+        }
 
         //strings to insert data
-        $insertUser = "INSERT INTO `user` VALUES (NULL,'Chris', 'Bishop', $password, 'chris@gmail.com', '1111', '20/03/1972'),
-                                                 (NULL,'Mary','LittleLamb', $password, 'mary@gmail.com','2222', '01/01/2000');";
+        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', NULL, '$admin', 'admin@ktc.com', 'Call KTC instead', '01/01/1970'),
+                                                 (NULL, 'CBishop', 'Chris', 'Bishop', '$password', 'chris@gmail.com', '1111', '20/03/1972'),
+                                                 (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 'mary@gmail.com','2222', '01/01/2000');";
 
         $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,1,'01/02/2003'),
                                                        (NULL,'CreditCard',20,1,'02/02/2003'),
@@ -123,17 +130,17 @@ class Model
 
         if ($result->num_rows == 0) {        
 
-        if (!$this->db->query($insertUser)) {
+            if (!$this->db->query($insertUser)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample data!");
+                throw new BankException("Failed creating sample user data! ".mysqli_error($this->db));
             }
-        if (!$this->db->query($insertAccount)) {
+            if (!$this->db->query($insertAccount)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample data!");
+                throw new BankException("Failed creating sample account data! ".mysqli_error($this->db));
             }
-        if (!$this->db->query($insertTransaction)) {
+            if (!$this->db->query($insertTransaction)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample data!");
+                throw new BankException("Failed creating sample transaction data! ".mysqli_error($this->db));
             }
         }
     }

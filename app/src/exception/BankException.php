@@ -16,7 +16,7 @@ class BankException extends \Exception
    {
        parent::__construct($message);
    }
-    public function __construct($code = 0)
+    public function __construct($code = 0, $message = "")
     {
         switch($code) {
             case 0:
@@ -31,8 +31,20 @@ class BankException extends \Exception
             case 3:
                 $message = 'Insufficient Balance';
                 break;
+            case 4:
+                $message = 'Invalid username or password';
+                break;
+            case 5:
+                $message = 'User with this name already exists';
+                break;
+            case 6:
+                $message = 'Failed to hash entered password';
+                break;
+            case 7:
+                $message = 'Failed to create user';
+                break;
             default:
-                $message = 'Invalid Data Entered';
+                $code = 99;
                 break;
         }
 

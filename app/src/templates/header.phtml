@@ -1,6 +1,5 @@
 <!---------- Header starts --------------->
 <!DOCTYPE html>
-<?= session_start(); ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +10,8 @@
 <header>
     <h1>KTC BANKING</h1>
     <div class="header-right">
-        <!--<?php
+        <?php
+            session_start();
             if (isset($_SESSION['userName'])) {
                 $userName = $_SESSION['userName'];
                 echo "<p>Welcome $userName</p>";
@@ -21,21 +21,26 @@
         <?php
             if (isset($_SESSION['userName'])) {
                 if ($_SESSION['userName'] == "admin") {
-                    echo "<a href=$linkTo('userIndex')>Users</a>";
-                } else {
-                    echo "<a href=$linkTo('userLogout')>Log out</a>";
+                    $href = $linkTo('userIndex');
+                    echo "<a href=$href>Users</a>";
                 }
-                echo "<a href=$linkTo('transactionIndex')>Transactions</a>";
-                echo "<a href=$linkTo('accountCreate')>Create account</a>";
+                $href = $linkTo('userLogout');
+                echo "<a href=$href>Log out</a>";
+                $href = $linkTo('accountIndex');
+                echo "<a href=$href>Accounts</a>";
+                $href = $linkTo('transactionIndex');
+                echo "<a href=$href>Transactions</a>";
+                $href = $linkTo('accountCreate');
+                echo "<a href=$href>Create account</a>";
             }
-        ?>-->
-        <a href=<?= $linkTo('accountIndex'); ?>>Home</a>
+        ?>
+        <!--<a href=<?= $linkTo('Home'); ?>>Home</a>
         <a href=<?= $linkTo('userIndex'); ?>>Users</a>
         <a href=<?= $linkTo('transactionIndex'); ?>>Transactions</a>
         <a href=<?= $linkTo('accountWithdraw'); ?>>Withdraw</a>
         <a href=<?= $linkTo('accountDeposit'); ?>>Deposit</a>
         <a href=<?= $linkTo('accountCreate'); ?>>Create account</a>
-        <a href="mailto:ktc@ktc.com">Email Us</a>
+        <a href="mailto:ktc@ktc.com">Email Us</a>-->
     </div>
 </header>
 <!---------- Header ends --------------->

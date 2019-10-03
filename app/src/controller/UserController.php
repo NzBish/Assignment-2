@@ -45,10 +45,9 @@ class UserController extends Controller
             $user = new UserModel();
             $user->load($_POST['userName']);
             if (password_verify($_POST['password'], $user->getPassword())) {
+                session_start();
                 $_SESSION['userName'] = $user->getUserName();
-                if (!isset($_SESSION['userName'])) throw new BankException("Couldn't set session details");
                 $_SESSION['userId'] = $user->getId();
-                if (!isset($_SESSION['userId'])) throw new BankException("Couldn't set session details");
                 $this->redirect('accountIndex');
             } else {
                 throw new BankException("Invalid username or password"); // Maybe not an exception?

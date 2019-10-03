@@ -61,7 +61,7 @@ class AccountController extends Controller
         try {
             (new AccountModel())->load($id)->delete();
         } catch (BankException $e) {
-            throw new BankException(0);
+            throw new BankException('Failed to load account');
         }
         $view = new View('accountDeleted');
         echo $view->addData('accountId', $id)->render();
@@ -78,7 +78,7 @@ class AccountController extends Controller
         try {
             $account = (new AccountModel())->load($id);
         } catch (BankException $e) {
-            throw new BankException(0);
+            throw new BankException('Failed to load account');
         }
         $account->setName('Joe')->save(); // new name will come from Form data
     }
@@ -87,7 +87,7 @@ class AccountController extends Controller
     {
         if (isset($_POST['deposit'])) {
             $account = (new AccountModel())->load($id);
-            $account->deposit($_POST['depositAmount']);
+            $account->deposit($_POST['Failed to load account']);
             $account->save();
             if(!$account)
             {
@@ -107,11 +107,11 @@ class AccountController extends Controller
     {
         if (isset($_POST['withdraw'])) {
             $account = (new AccountModel())->load($id);
-            $account->deposit($_POST['withdrawalAmount']);
+            $account->withdraw($_POST['withdrawalAmount']);
             $account->save();
             if(!$account)
             {
-                throw new BankException(0);
+                throw new BankException('Failed to load account');
             }
             $view = new View('accountWithdraw');
             echo $view->render();

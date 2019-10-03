@@ -16,6 +16,7 @@ class BankException extends \Exception
    {
        parent::__construct($message);
    }
+   /*
     public function __construct($code = 0)
     {
         switch($code) {
@@ -37,5 +38,5 @@ class BankException extends \Exception
         }
 
         parent::__construct($message, $code);
-    }
+    }*/
 }

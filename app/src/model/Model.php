@@ -110,14 +110,14 @@ class Model
         }
 
         //strings to insert data
-        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', NULL, '$admin', 'admin@ktc.com', 'Call KTC instead', '01/01/1970'),
+        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin', 'admin@ktc.com', 'Call KTC instead', '01/01/1970'),
                                                  (NULL, 'CBishop', 'Chris', 'Bishop', '$password', 'chris@gmail.com', '1111', '20/03/1972'),
                                                  (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 'mary@gmail.com','2222', '01/01/2000');";
 
-        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,1,'01/02/2003'),
-                                                       (NULL,'CreditCard',20,1,'02/02/2003'),
-                                                       (NULL,'Savings',300,2,'02/12/2018'),
-                                                       (NULL,'CreditCard',50,2,'02/12/2018');";
+        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,2,'01/02/2003'),
+                                                       (NULL,'CreditCard',20,2,'02/02/2003'),
+                                                       (NULL,'Savings',300,3,'02/12/2018'),
+                                                       (NULL,'CreditCard',50,3,'02/12/2018');";
 
         $insertTransaction = "INSERT INTO `transaction` VALUES (NULL,'Deposit',20,'25/09/2019',1),
                                                                (NULL,'Withdraw',3,'2/02/2018',2),
@@ -132,15 +132,15 @@ class Model
 
             if (!$this->db->query($insertUser)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample user data! ".mysqli_error($this->db));
+                throw new BankException(99, "Failed creating sample user data! ".mysqli_error($this->db));
             }
             if (!$this->db->query($insertAccount)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample account data! ".mysqli_error($this->db));
+                throw new BankException(99,"Failed creating sample account data! ".mysqli_error($this->db));
             }
             if (!$this->db->query($insertTransaction)) {
                 // handle appropriately
-                throw new BankException("Failed creating sample transaction data! ".mysqli_error($this->db));
+                throw new BankException(99,"Failed creating sample transaction data! ".mysqli_error($this->db));
             }
         }
     }

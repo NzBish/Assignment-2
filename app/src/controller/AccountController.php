@@ -19,10 +19,22 @@ class AccountController extends Controller
      */
     public function indexAction()
     {
-        $collection = new AccountCollectionModel();
-        $accounts = $collection->getAccounts();
-        $view = new View('accountIndex');
-        echo $view->addData('accounts', $accounts)->render();
+        session_start();
+        if (isset($_SESSION['userName'])) {
+            try {
+                $userName = $_SESSION['userName'];
+                $userId = $_SESSION['userId'];
+                $collection = new AccountCollectionModel($userName, $userId);
+                $accounts = $collection->getAccounts();
+                $view = new View('accountIndex');
+                echo $view->addData('accounts', $accounts)->render();
+            } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+            }
+        } else {
+            $this->redirect('Home');
+        }
     }
 
     /**
@@ -31,6 +43,7 @@ class AccountController extends Controller
      */
     public function createAction()
     {
+        session_start();
         if (isset($_POST['create'])) {
             $account = new AccountModel();
             $account->setType($_POST['accountType']);
@@ -58,6 +71,7 @@ class AccountController extends Controller
      */
     public function deleteAction($id)
     {
+        session_start();
         try {
             (new AccountModel())->load($id)->delete();
         } catch (BankException $e) {
@@ -75,6 +89,7 @@ class AccountController extends Controller
      */
     public function updateAction($id)
     {
+        session_start();
         try {
             $account = (new AccountModel())->load($id);
         } catch (BankException $e) {
@@ -85,6 +100,7 @@ class AccountController extends Controller
 
     public function depositAction($id)
     {
+        session_start();
         if (isset($_POST['deposit'])) {
             $account = (new AccountModel())->load($id);
             $account->deposit($_POST['depositAmount']);
@@ -103,11 +119,12 @@ class AccountController extends Controller
     }
 
 
-    public function withdrawAction()
+    public function withdrawAction($id)
     {
+        session_start();
         if (isset($_POST['withdraw'])) {
             $account = (new AccountModel())->load($id);
-            $account->deposit($_POST['withdrawalAmount']);
+            $account->withdraw($_POST['withdrawalAmount']);
             $account->save();
             if(!$account)
             {

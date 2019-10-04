@@ -102,9 +102,11 @@ class TransactionModel extends Model
             if (!$result = $this->db->query("INSERT INTO `transaction` VALUES
                                         (NULL,'$type','$amount','$dateTime','$accountId');"))
             {
-                throw new BankException("Insert transaction failed");
+                throw new BankException(99,"Insert transaction failed");
             }
             $this->id = $this->db->insert_id;
+        } else {
+            throw new BankException(99,"Transactions should not be updated");
         }
 
         return $this;

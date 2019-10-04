@@ -47,6 +47,9 @@ class BankException extends \Exception
             case 8:
                 $message = 'User is not logged in';
                 break;
+            case 9:
+                $message = 'You don\'t have any accounts yet';
+                break;
             default:
                 $code = 99;
                 break;

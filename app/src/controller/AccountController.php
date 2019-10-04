@@ -29,8 +29,12 @@ class AccountController extends Controller
                 $view = new View('accountIndex');
                 echo $view->addData('accounts', $accounts)->render();
             } catch (BankException $ex) {
-                $view = new View('exception');
-                echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                if ($ex->getCode() == 9) {
+                    $this->redirect('accountCreate');
+                } else {
+                    $view = new View('exception');
+                    echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                }
             }
         } else {
             $this->redirect('Home');

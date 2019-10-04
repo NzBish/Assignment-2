@@ -7,7 +7,9 @@ use ktc\a2\Exception\BankException;
  * Class TransactionModel
  *
  * @package ktc/a2
- * @author
+ * @author  Katie Dempsey
+ * @author  Tony Crompton
+ * @author  Chris Bishop
  */
 class TransactionModel extends Model
 {
@@ -43,7 +45,7 @@ class TransactionModel extends Model
         return $this->amount;
     }
 
-    public function setAmount(float $amount)
+    public function setAmount($amount)
     {
         $this->amount = $amount;
         return $this;
@@ -54,7 +56,7 @@ class TransactionModel extends Model
         return $this->datetime;
     }
 
-    public function setDateTime(string $date)
+    public function setDateTime($date)
     {
         $this->datetime = $date;
         return $this;
@@ -65,7 +67,7 @@ class TransactionModel extends Model
         return $this->accountID;
     }
 
-    public function setAccountId(int $account)
+    public function setAccountId($account)
     {
         $this->accountID = $account;
 
@@ -92,7 +94,6 @@ class TransactionModel extends Model
 
     public function save()
     {
-
         $type = $this->type ?? "NULL";
         $amount = $this->amount ?? "NULL";
         $dateTime = $this->datetime ?? "NULL";
@@ -111,4 +112,6 @@ class TransactionModel extends Model
 
         return $this;
     }
+
+
 }

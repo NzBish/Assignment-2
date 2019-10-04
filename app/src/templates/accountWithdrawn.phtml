@@ -1,0 +1,28 @@
+<?php include "header.phtml" ?>
+    <!---------- Body starts --------------->
+
+    <br>
+    <div>
+        <p>Successfully withdrawn $<?= $amount ?></p>
+        <p>New balance:</p>
+        <table>
+            <tr>
+                <th>Account ID</th>
+                <th>Account Name</th>
+                <th>Account Balance</th>
+                <th>Date Started</th>
+            </tr>
+            <tr>
+                <td><?= $account->getId() ?></td>
+                <td><?= $account->getType() ?></td>
+                <td><?= $account->getBalance() ?></td>
+                <td><?= $account->getDateStarted() ?></td>
+            </tr>
+        </table>
+        <br>
+        <a class='prettybutton' href=<?= $linkTo($back); ?>>Back to Accounts</a>
+    </div>
+    <br>
+
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

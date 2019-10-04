@@ -39,7 +39,6 @@ class UserModel extends Model
 
     public function setUserName($userName)
     {
-        $db=$this->getDb();
         $this->userName = mysqli_real_escape_string($this->db, $userName);
 
         return $this;
@@ -52,7 +51,6 @@ class UserModel extends Model
 
     public function setFirstName($firstName)
     {
-        $db=$this->getDb();
         $this->firstName = mysqli_real_escape_string($this->db, $firstName);
 
         return $this;
@@ -65,7 +63,6 @@ class UserModel extends Model
 
     public function setLastName($lastName)
     {
-        $db=$this->getDb();
         $this->lastName = mysqli_real_escape_string($this->db, $lastName);
         return $this;
     }
@@ -88,7 +85,6 @@ class UserModel extends Model
 
     public function setEmail($email)
     {
-        $db=$this->getDb();
         $this->email = mysqli_real_escape_string($this->db, $email);
 
         return $this;
@@ -101,7 +97,6 @@ class UserModel extends Model
 
     public function setPhone($phone)
     {
-        $db=$this->getDb();
         $this->phone = mysqli_real_escape_string($this->db, $phone);
 
         return $this;
@@ -114,7 +109,6 @@ class UserModel extends Model
 
     public function setDateOfBirth($date)
     {
-        $db=$this->getDb();
         $this->dateOfBirth = mysqli_real_escape_string($this->db, $date);
 
         return $this;

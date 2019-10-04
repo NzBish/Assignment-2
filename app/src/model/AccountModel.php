@@ -8,6 +8,9 @@ use ktc\a2\Exception\BankException;
  *
  * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  Katie Dempsey
+ * @author  Tony Crompton
+ * @author  Chris Bishop
  */
 class AccountModel extends Model
 {
@@ -66,7 +69,6 @@ class AccountModel extends Model
     public function setUser(int $user)
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -145,22 +147,32 @@ class AccountModel extends Model
         return $this;
     }
 
-    private function updateBalance() {
+    private function updateBalance($amount, $transType) {
         $id =  $this->id;
         $balance = $this->balance;
+        $done = true;
         if (!$result = $this->db->query(
             "UPDATE `account`
             SET `account_bal` = $balance
             WHERE `account_id` = $id;"
         )) {
-            throw new BankException(99,'Error Updating Balance '.mysqli_error($this->db));
+            $done = true;
+        }
+        if ($done){
+            if (!$result = $this->db->query(
+            "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `account_id`)
+                    VALUES ('$transType', '$amount', '$id');"
+        )) {
+            throw new BankException(99,'Error Updating Transaction '.mysqli_error($this->db));
+        }
         }
     }
 
     public function deposit($amount) {
         $this->balance += $amount;
+        $transType = 'Deposit';
         try {
-            $this->updateBalance();
+            $this->updateBalance($amount, $transType);
         }
         catch (BankException $e) {
             throw $e;
@@ -169,8 +181,9 @@ class AccountModel extends Model
 
     public function withdraw($amount) {
         $this->balance -= $amount;
+        $transType = 'Withdraw';
         try {
-            $this->updateBalance();
+            $this->updateBalance($amount, $transType);
         }
         catch (BankException $e) {
             throw $e;

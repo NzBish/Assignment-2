@@ -4,6 +4,7 @@ namespace ktc\a2\controller;
 use ktc\a2\Exception\BankException;
 use ktc\a2\model\AccountModel;
 use ktc\a2\model\AccountCollectionModel;
+use ktc\a2\model\TransactionModel;
 use ktc\a2\view\View;
 
 /**
@@ -130,15 +131,19 @@ class AccountController extends Controller
     {
         session_start();
         if (isset($_POST['withdraw'])) {
-            $account = (new AccountModel())->load($id);
-            $account->withdraw($_POST['withdrawalAmount']);
-            $account->save();
-            if(!$account)
-            {
-                throw new BankException('Failed to load account');
+            try {
+                $account = (new AccountModel())->load($id);
+                $account->withdraw($_POST['withdrawalAmount']);
+                $account->save();
+                if (!$account) {
+                    throw new BankException(0);
+                }
+                $view = new View('accountWithdrawn');
+                echo $view->addData("amount", $_POST['withdrawalAmount'])->addData("account", $account)->addData("back", "accountIndex")->render();
+            } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
             }
-            $view = new View('accountWithdraw');
-            echo $view->render();
         } else{
             $view = new View('accountWithdraw');
             echo $view->render();

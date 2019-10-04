@@ -83,17 +83,6 @@ $collection->attachRoute(
     )
 );
 
-/*$collection->attachRoute(
-    new Route(
-        '/account/deposited/:id',
-        array(
-            '_controller' => 'ktc\a2\controller\AccountController::depositAction',
-            'methods' => array('GET', 'POST'),
-            'name' => 'accountDeposited'
-        )
-    )
-);*/
-
 $collection->attachRoute(
     new Route(
         '/transactions/',

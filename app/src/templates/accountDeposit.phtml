@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><button name="deposit" type="submit" class="btn btn-default" value="submit">Deposit</button></td>
+            <td><button name="deposit" type="submit" class="btn btn-default" value="submit" onclick="href= <?= $linkTo('accountDeposited', ['id' => $account->getId()]);?>">Deposit</button></td>
         </tr>
     </table>
 </form>

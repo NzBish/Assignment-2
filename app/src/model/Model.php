@@ -144,4 +144,12 @@ class Model
             }
         }
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDb()
+    {
+        return $this->db;
+    }
 }

@@ -37,8 +37,9 @@ class UserModel extends Model
         return $this->userName;
     }
 
-    public function setUserName(string $userName)
+    public function setUserName($userName)
     {
+        $db=$this->getDb();
         $this->userName = mysqli_real_escape_string($db, $userName);
 
         return $this;
@@ -49,8 +50,9 @@ class UserModel extends Model
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName)
+    public function setFirstName($firstName)
     {
+        $db=$this->getDb();
         $this->firstName = mysqli_real_escape_string($db, $firstName);
 
         return $this;
@@ -61,8 +63,9 @@ class UserModel extends Model
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName)
+    public function setLastName($lastName)
     {
+        $db=$this->getDb();
         $this->lastName = mysqli_real_escape_string($db, $lastName);
         return $this;
     }
@@ -72,7 +75,7 @@ class UserModel extends Model
         return $this->password;
     }
 
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
         return $this;
@@ -83,8 +86,9 @@ class UserModel extends Model
         return $this->email;
     }
 
-    public function setEmail(string $email)
+    public function setEmail($email)
     {
+        $db=$this->getDb();
         $this->email = mysqli_real_escape_string($db, $email);
 
         return $this;
@@ -95,8 +99,9 @@ class UserModel extends Model
         return $this->phone;
     }
 
-    public function setPhone(string $phone)
+    public function setPhone($phone)
     {
+        $db=$this->getDb();
         $this->phone = mysqli_real_escape_string($db, $phone);
 
         return $this;
@@ -107,8 +112,9 @@ class UserModel extends Model
         return $this->dateOfBirth;
     }
 
-    public function setDateOfBirth(string $date)
+    public function setDateOfBirth($date)
     {
+        $db=$this->getDb();
         $this->dateOfBirth = mysqli_real_escape_string($db, $date);
 
         return $this;

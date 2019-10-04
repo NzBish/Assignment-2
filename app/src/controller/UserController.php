@@ -22,6 +22,7 @@ class UserController extends Controller
      */
     public function indexAction()
     {
+        session_start();
         if (isset($_SESSION['userName'])) {
             if ($_SESSION['userName'] == "admin") {
                 $collection = new UserCollectionModel();
@@ -41,6 +42,7 @@ class UserController extends Controller
      */
     public function loginAction()
     {
+        session_start();
         try {
             if (isset($_POST['login'])) {
                 $user = new UserModel();
@@ -73,8 +75,7 @@ class UserController extends Controller
             session_unset();
             session_destroy();
         }
-        $view = new View('userLogout');
-        echo $view->render();
+        $this->redirect('Home');
     }
 
     /**
@@ -82,6 +83,7 @@ class UserController extends Controller
      */
     public function createAction()
     {
+        session_start();
         try {
             if (isset($_POST['create'])) {
                 $user = new UserModel();

@@ -17,6 +17,7 @@ class TransactionController extends Controller
 
     public function indexAction()
     {
+        session_start();
         $collection = new TransactionCollectionModel();
         $transactions = $collection->getTransactions();
         $view = new View('transactionIndex');

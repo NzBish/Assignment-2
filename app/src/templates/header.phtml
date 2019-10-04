@@ -11,7 +11,6 @@
     <h1>KTC BANKING</h1>
     <div class="header-right">
         <?php
-            session_start();
             if (isset($_SESSION['userName'])) {
                 $userName = $_SESSION['userName'];
                 echo "<p>Welcome $userName</p>";

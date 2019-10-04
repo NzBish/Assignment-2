@@ -43,6 +43,9 @@ class BankException extends \Exception
             case 7:
                 $message = 'Failed to create user';
                 break;
+            case 8:
+                $message = 'User is not logged in';
+                break;
             default:
                 $code = 99;
                 break;

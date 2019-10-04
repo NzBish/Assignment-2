@@ -15,11 +15,21 @@ class AccountCollectionModel extends Model
 
     private $N;
 
-    public function __construct()
+    public function __construct($userName, $userId)
     {
         parent::__construct();
-        if (!$result = $this->db->query("SELECT `account_id` FROM `account`;")) {
-            throw new BankException("Account db table is empty");
+        if (isset($userName)) {
+            if ($userName == "admin") {
+                if (!$result = $this->db->query("SELECT `account_id` FROM `account`;")) {
+                    throw new BankException(99,"Account db table is empty");
+                }
+            } else {
+                if (!$result = $this->db->query("SELECT `account_id` FROM `account` WHERE `user_id` IS '$userId';")) {
+                    throw new BankException(99, "You don't have any accounts yet");
+                }
+            }
+        } else {
+            throw new BankException(8);
         }
         $this->accountIds = array_column($result->fetch_all(), 0);
         $this->N = $result->num_rows;

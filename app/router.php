@@ -63,7 +63,7 @@ $collection->attachRoute(
 
 $collection->attachRoute(
     new Route(
-        '/account/withdraw/',
+        '/account/withdraw/:id',
         array(
             '_controller' => 'ktc\a2\controller\AccountController::withdrawAction',
             'methods' => array('GET', 'POST'),
@@ -74,7 +74,7 @@ $collection->attachRoute(
 
 $collection->attachRoute(
     new Route(
-        '/account/deposit/',
+        '/account/deposit/:id',
         array(
             '_controller' => 'ktc\a2\controller\AccountController::depositAction',
             'methods' => array('GET', 'POST'),
@@ -109,7 +109,7 @@ $collection->attachRoute(
     new Route(
         '/users/login/',
         array(
-            '_controller' => 'agilman\a2\controller\UserController::loginAction',
+            '_controller' => 'ktc\a2\controller\UserController::loginAction',
             'methods' => array('GET','POST'),
             'name' => 'userLogin'
         )
@@ -120,7 +120,7 @@ $collection->attachRoute(
     new Route(
         '/users/logout/',
         array(
-            '_controller' => 'agilman\a2\controller\UserController::logoutAction',
+            '_controller' => 'ktc\a2\controller\UserController::logoutAction',
             'methods' => 'GET',
             'name' => 'userLogout'
         )
@@ -131,7 +131,7 @@ $collection->attachRoute(
     new Route(
         '/users/create/',
         array(
-            '_controller' => 'agilman\a2\controller\UserController::createAction',
+            '_controller' => 'ktc\a2\controller\UserController::createAction',
             'methods' => array('GET','POST'),
             'name' => 'userCreate'
         )

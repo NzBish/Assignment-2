@@ -2,9 +2,11 @@
     <!---------- Body starts --------------->
 
     <br>
-    <p>Error: <?php echo $exception->getMessage(); ?></p>
-    <br>
-    <a href=<?= $linkTo($back); ?>>Back</a>
+    <div>
+        <p>Error: <?php echo $exception->getMessage(); ?></p>
+        <br>
+        <a class='prettybutton' href=<?= $linkTo($back); ?>>Back</a>
+    </div>
     <br>
 
     <!---------- Body ends -------------------->

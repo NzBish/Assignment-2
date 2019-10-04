@@ -25,7 +25,7 @@ class AccountCollectionModel extends Model
                 }
             } else {
                 if (!$result = $this->db->query("SELECT `account_id` FROM `account` WHERE `user_id` IS '$userId';")) {
-                    throw new BankException(99, "You don't have any accounts yet");
+                    throw new BankException(10);
                 }
             }
         } else {

@@ -102,20 +102,23 @@ class AccountController extends Controller
     {
         session_start();
         if (isset($_POST['deposit'])) {
-            $account = (new AccountModel())->load($id);
-            $account->deposit($_POST['Failed to load account']);
-            $account->save();
-            if(!$account)
-            {
-                throw new BankException(0);
+            try {
+                $account = (new AccountModel())->load($id);
+                $account->deposit($_POST['depositAmount']);
+                $account->save();
+                if (!$account) {
+                    throw new BankException(0);
+                }
+                $view = new View('accountDeposited');
+                echo $view->addData("amount", $_POST['depositAmount'])->addData("account", $account)->addData("back", "accountIndex")->render();
+            } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
             }
-            $view = new View('accountDeposit');
-            echo $view->render();
-        } else{
+        } else {
             $view = new View('accountDeposit');
             echo $view->render();
         }
-
     }
 
 

@@ -83,7 +83,7 @@ $collection->attachRoute(
     )
 );
 
-$collection->attachRoute(
+/*$collection->attachRoute(
     new Route(
         '/account/deposited/:id',
         array(
@@ -92,7 +92,7 @@ $collection->attachRoute(
             'name' => 'accountDeposited'
         )
     )
-);
+);*/
 
 $collection->attachRoute(
     new Route(

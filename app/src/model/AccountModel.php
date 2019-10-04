@@ -128,7 +128,7 @@ class AccountModel extends Model
                                         `account_bal` = '$balance',
                                         `user_id` = '$user',
                                         `account_dateStarted` = '$dateStarted'
-                                         WHERE `id` = $id;")) {
+                                         WHERE `account_id` = $id;")) {
                 throw new BankException("Update account failed");
             }
         }
@@ -151,9 +151,9 @@ class AccountModel extends Model
         if (!$result = $this->db->query(
             "UPDATE `account`
             SET `account_bal` = $balance
-            WHERE id = $id;"
+            WHERE `account_id` = $id;"
         )) {
-            throw new BankException('Error Updating Balance');
+            throw new BankException(99,'Error Updating Balance '.mysqli_error($this->db));
         }
     }
 

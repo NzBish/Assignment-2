@@ -6,20 +6,12 @@
         <tr>
             <td><label>Deposit Amount</label></td>
             <td><label>
-                    <input name="depositAmount" placeholder="Enter Amount" required>
+                    <input type="number" step=0.01 min=0 name="depositAmount" placeholder="Enter Amount" required>
                 </label></td>
         </tr>
         <tr>
-            <td><label>Select Account</label></td>
-            <td><select>
-                    <option value="savings">Savings Account</option>
-                    <option value="cheque">Cheque Account</option>
-                    <option value="fastsaver">FastSaver Account</option>
-                </select></td>
-        </tr>
-        <tr>
             <td></td>
-            <td><button name="deposit" type="submit" class="btn btn-default" value="submit" onclick="href= <?= $linkTo('accountDeposited', ['id' => $account->getId()]);?>">Deposit</button></td>
+            <td><button name="deposit" type="submit" class="btn btn-default" value="submit">Deposit</button></td>
         </tr>
     </table>
 </form>

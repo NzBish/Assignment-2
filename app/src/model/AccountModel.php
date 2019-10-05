@@ -128,8 +128,7 @@ class AccountModel extends Model
             if (!$result = $this->db->query("UPDATE `account` SET
                                         `account_type` = '$type',
                                         `account_bal` = '$balance',
-                                        `user_id` = '$user',
-                                        `account_dateStarted` = '$dateStarted'
+                                        `user_id` = '$user'
                                          WHERE `account_id` = $id;")) {
                 throw new BankException("Update account failed");
             }
@@ -148,7 +147,7 @@ class AccountModel extends Model
     }
 
     private function updateBalance($amount, $transType) {
-        $id =  $this->id;
+        $id = $this->id;
         $balance = $this->balance;
         $done = true;
         if (!$result = $this->db->query(

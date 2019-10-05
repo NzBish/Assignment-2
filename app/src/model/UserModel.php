@@ -114,21 +114,27 @@ class UserModel extends Model
         return $this;
     }
 
-    public function check($userName)
+    public function check($name)
     {
-        return $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$userName';");
+        $result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';");
+        if ($result->num_rows < 1) {
+            return false;
+        }
+        return true;
     }
 
-    public function load($userName)
+    public function load($name)
     {
-        if (!$result = $this->db->query(
-            "SELECT * FROM `user` WHERE `user_name` = '$userName';")) {
-            throw new BankException('No user found with username '.$userName);
+        if (!$result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';")) {
+            throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+        }
+        if ($result->num_rows < 1) {
+            throw new BankException(99,'No user found with username '.$name);
         }
         if ($result->num_rows == 1) {
             $result = $result->fetch_assoc();
             $this->id = $result['user_id'];
-            $this->userName = $userName;
+            $this->userName = $name;
             $this->firstName = $result['user_first'];
             $this->lastName = $result['user_last'];
             $this->password = $result['user_pass'];
@@ -136,7 +142,7 @@ class UserModel extends Model
             $this->phone = $result['user_phNumber'];
             $this->dateOfBirth = $result['user_dob'];
         } else {
-            throw new BankException('Username '.$userName.' is not unique');
+            throw new BankException(99,'Username '.$name.' is not unique');
         }
 
         return $this;
@@ -155,9 +161,8 @@ class UserModel extends Model
         if (!isset($this->id)) {
             // New user - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `user` VALUES
-                                        (NULL,'$uName','$fName','$lName','$password','$email','$phNumber','$dob');"))
-            {
-                throw new BankException("Insert user failed");
+                                        (NULL,'$uName','$fName','$lName','$password','$email','$phNumber','$dob');")) {
+                throw new BankException(7);
             }
             $this->id = $this->db->insert_id;
         } else {
@@ -171,7 +176,7 @@ class UserModel extends Model
                                         `user_phNumber` = '$phNumber',
                                         `user_dob` = '$dob'
                                          WHERE `id` = $id;")) {
-                throw new BankException("Update account failed");
+                throw new BankException(7);
             }
         }
 

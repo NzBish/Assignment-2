@@ -1,23 +1,30 @@
 <?php include "header.phtml" ?>
 <!---------- Body starts --------------->
-
 <br>
 <table>
     <tr>
+        <?php if ($_SESSION['userName'] == "admin") { ?>
+        <th>User ID</th>
+        <?php } ?>
         <th>Account ID</th>
-        <th>Account Name</th>
+        <th>Account Type</th>
         <th>Account Balance</th>
         <th>Date Started</th>
+        <th class="tablebutton" colspan=4>Actions</th>
     </tr>
     <?php foreach ($accounts as $account) { ?>
     <tr>
+        <?php if ($_SESSION['userName'] == "admin") { ?>
+        <td><?= $account->getUser() ?></td>
+        <?php } ?>
         <td><?= $account->getId() ?></td>
         <td><?= $account->getType() ?></td>
         <td><?= $account->getBalance() ?></td>
         <td><?= $account->getDateStarted() ?></td>
-        <td><a href= <?= $linkTo('accountDeposit', ['id' => $account->getId()]);?> >Deposit</a></td>
-        <td><a href= <?= $linkTo('accountWithdraw', ['id' => $account->getId()]);?> >Withdraw</a></td>
-        <td><a href= <?= $linkTo('accountDelete', ['id' => $account->getId()]);?> >Delete</a></td>
+        <td class="tablebutton"><a href= <?= $linkTo('accountDeposit', ['id' => $account->getId()]) ?> >Deposit</a></td>
+        <td class="tablebutton"><a href= <?= $linkTo('accountWithdraw', ['id' => $account->getId()]) ?> >Withdraw</a></td>
+        <td class="tablebutton"><a href= <?= $linkTo('transactionIndex', ['id' => $account->getId()]) ?> >Transaction List</a></td>
+        <td class="tablebutton"><a href= <?= $linkTo('accountDelete', ['id' => $account->getId()]) ?> >Close</a></td>
     </tr>
     <?php } ?>
 </table>
@@ -25,6 +32,5 @@
         <a class="prettybutton" href= <?= $linkTo('accountCreate') ?>>Create new account</a>
     </div>
 <br>
-
 <!---------- Body ends -------------------->
 <?php include "footer.phtml" ?>

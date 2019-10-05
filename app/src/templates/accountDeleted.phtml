@@ -1,9 +1,9 @@
 <?php include "header.phtml" ?>
 <!---------- Body starts --------------->
 <div>
-    <p>Account deleted successfully.</p>
+    <p>Account <?= $accountId ?> closed successfully</p>
     <br>
-    <a class='prettybutton' href=<?= $linkTo($back); ?>>Back to Accounts</a>
+    <a class='prettybutton' href=<?= $linkTo('accountIndex') ?>>Back to Accounts</a>
     <br>
 </div>
     <!---------- Body ends -------------------->

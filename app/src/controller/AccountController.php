@@ -32,6 +32,7 @@ class AccountController extends Controller
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "Home")->render();
                 if ($ex->getCode() == 9) {
+                    $_SESSION['noAcc'] = true;
                     $this->redirect('accountCreate');
                 } else {
                     $view = new View('exception');
@@ -45,30 +46,43 @@ class AccountController extends Controller
 
     /**
      * Account Create action
-     * @throws BankException
      */
     public function createAction()
     {
         session_start();
-        if (isset($_POST['create'])) {
-            try {
-                $account = new AccountModel();
-                $account->setType($_POST['accountType']);
-                $account->setUser($_SESSION['userId']);
-                $account->setBalance(0.0);
-                $account->save();
-                if (!$account) {
-                    throw new BankException(12);
-                }
-                $view = new View('accountCreated');
-                echo $view->addData("back", "accountIndex")->render();
-            } catch (BankException $ex) {
+        if (isset($_SESSION['userName'])) {
+            if (isset($_POST['create'])) {
+                try {
+                    if ($_POST['accountType'] == "undefined") {
+                        throw new BankException(99, "You must select an account type");
+                    }
+                    $account = new AccountModel();
+                    $account->setType($_POST['accountType']);
+                    if (isset($_POST['userId'])) {
+                        $account->setUser($_POST['userId']);
+                    } else {
+                        $account->setUser($_SESSION['userId']);
+                    }
+                    $account->setBalance(0.0);
+                    //$account->setDateStarted(date("d/m/Y"));
+                    $account->save();
+                    if (!$account) { throw new BankException(0); }
+                    if (isset($_SESSION['noAcc'])) { unset($_SESSION['noAcc']); }
+                    if ($_POST['makeDeposit']) {
+                        $this->redirect('accountDeposit', ['id' => $account->getId()]);
+                    } else {
+                        $this->redirect('accountIndex');
+                    }
+                } catch (BankException $ex) {
                     $view = new View('exception');
-                    echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
+                    echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                }
+            } else {
+                $view = new View('accountCreate');
+                echo $view->render();
             }
         } else {
-        $view = new View('accountCreate');
-        echo $view->render();
+            $this->redirect('Home');
         }
     }
 
@@ -76,38 +90,35 @@ class AccountController extends Controller
      * Account Delete action
      *
      * @param int $id Account id to be deleted
-     * @throws BankException
      */
     public function deleteAction($id)
     {
         session_start();
-        try {
-            (new AccountModel())->load($id)->delete();
-            if (!$id) {
-                throw new BankException(11);
+        if ($_SESSION['userName'] == "admin") {
+            try {
+                (new AccountModel())->load($id)->delete();
+            } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
             }
-        } catch (BankException $ex) {
+            $view = new View('accountDeleted');
+            echo $view->addData('accountId', $id)->render();
+        } else {
             $view = new View('exception');
-            echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
+            echo $view->addData("exception", (new BankException(99,"Please contact us by phone to close an account")))->addData("back", "accountIndex")->render();
         }
-        $view = new View('accountDeleted');
-        echo $view->addData("back", "accountIndex")->render();
     }
 
     /**
      * Account Update action
      *
      * @param int $id Account id to be updated
-     * @throws BankException
      */
     public function updateAction($id)
     {
         session_start();
         try {
             $account = (new AccountModel())->load($id);
-            if (!$account) {
-                throw new BankException(0);
-            }
         } catch (BankException $ex) {
             $view = new View('exception');
             echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
@@ -127,7 +138,7 @@ class AccountController extends Controller
                     throw new BankException(0);
                 }
                 $view = new View('accountDeposited');
-                echo $view->addData("amount", $_POST['depositAmount'])->addData("account", $account)->addData("back", "accountIndex")->render();
+                echo $view->addData("amount", $_POST['depositAmount'])->addData("account", $account)->render();
             } catch (BankException $ex) {
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
@@ -156,7 +167,7 @@ class AccountController extends Controller
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
             }
-        } else{
+        } else {
             $view = new View('accountWithdraw');
             echo $view->render();
         }

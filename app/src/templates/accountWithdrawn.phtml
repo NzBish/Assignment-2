@@ -3,12 +3,12 @@
 
     <br>
     <div>
-        <p>Successfully withdrawn $<?= $amount ?></p>
+        <p>Successfully withdrew $<?= $amount ?></p>
         <p>New balance:</p>
         <table>
             <tr>
                 <th>Account ID</th>
-                <th>Account Name</th>
+                <th>Account Type</th>
                 <th>Account Balance</th>
                 <th>Date Started</th>
             </tr>
@@ -20,7 +20,7 @@
             </tr>
         </table>
         <br>
-        <a class='prettybutton' href=<?= $linkTo($back); ?>>Back to Accounts</a>
+        <a class='prettybutton' href=<?= $linkTo('accountIndex'); ?>>Back to Accounts</a>
     </div>
     <br>
 

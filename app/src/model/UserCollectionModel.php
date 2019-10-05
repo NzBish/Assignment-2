@@ -19,7 +19,10 @@ class UserCollectionModel extends Model
     {
         parent::__construct();
         if (!$result = $this->db->query("SELECT `user_name` FROM `user`;")) {
-            throw new BankException(99,"User db table is empty");
+            throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+        }
+        if ($result->num_rows < 1) {
+            throw new BankException(99,'User db table is empty');
         }
         $this->userNames = array_column($result->fetch_all(), 0);
         $this->N = $result->num_rows;

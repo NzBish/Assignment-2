@@ -92,7 +92,7 @@ class AccountModel extends Model
     {
         if (!$result = $this->db->query(
             "SELECT * FROM `account` WHERE `account_id` = $id;")) {
-            throw new BankException('No account found with id '.$id);
+            throw new BankException(99,'No account found with id '.$id);
         }
         if($result->num_rows > 0) {
             $result = $result->fetch_assoc();
@@ -118,7 +118,7 @@ class AccountModel extends Model
             if (!$result = $this->db->query("INSERT INTO `account` VALUES
                                         (NULL,'$type','$balance','$user','$dateStarted');"))
             {
-                throw new BankException("Insert account failed");
+                throw new BankException(99,'Insert account failed: '.mysqli_error($this->db));
             }
             $this->id = $this->db->insert_id;
         } else {
@@ -129,7 +129,7 @@ class AccountModel extends Model
                                         `user_id` = '$user',
                                         `account_dateStarted` = '$dateStarted'
                                          WHERE `account_id` = $id;")) {
-                throw new BankException("Update account failed");
+                throw new BankException(99,'Update account failed: '.mysqli_error($this->db));
             }
         }
 
@@ -139,7 +139,7 @@ class AccountModel extends Model
     public function delete()
     {
         if (!$result = $this->db->query("DELETE FROM `account` WHERE `account_id` = $this->id;")) {
-            throw new BankException("Delete account failed");
+            throw new BankException(99,'Delete account failed: '.mysqli_error($this->db));
         }
 
         return $this;
@@ -153,7 +153,7 @@ class AccountModel extends Model
             SET `account_bal` = $balance
             WHERE `account_id` = $id;"
         )) {
-            throw new BankException(99,'Error Updating Balance '.mysqli_error($this->db));
+            throw new BankException(99,'Couldn\'t update balance: '.mysqli_error($this->db));
         }
     }
 

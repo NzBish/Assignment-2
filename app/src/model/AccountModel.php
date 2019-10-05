@@ -93,10 +93,11 @@ class AccountModel extends Model
     public function load($id)
     {
         if (!$result = $this->db->query(
-            "SELECT * FROM `account` WHERE `account_id` = $id;")) {
-            throw new BankException(99,'No account found with id '.$id);
+            "SELECT * FROM `account` WHERE `account_id` = $id;"
+        )) {
+            throw new BankException(99, 'No account found with id ' . $id);
         }
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             $result = $result->fetch_assoc();
             $this->id = $id;
             $this->type = $result['account_type'];
@@ -118,9 +119,8 @@ class AccountModel extends Model
         if (!isset($this->id)) {
             // New account - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `account` VALUES
-                                        (NULL,'$type','$balance','$user',NOW());"))
-            {
-                throw new BankException(99,'Insert account failed: '.mysqli_error($this->db));
+                                        (NULL,'$type','$balance','$user',NOW());")) {
+                throw new BankException(99, 'Insert account failed: ' . mysqli_error($this->db));
             }
             $this->id = $this->db->insert_id;
         } else {
@@ -130,7 +130,7 @@ class AccountModel extends Model
                                         `account_bal` = '$balance',
                                         `user_id` = '$user'
                                          WHERE `account_id` = $id;")) {
-                throw new BankException(99,'Update account failed: '.mysqli_error($this->db));
+                throw new BankException(99, 'Update account failed: ' . mysqli_error($this->db));
             }
         }
 
@@ -140,13 +140,14 @@ class AccountModel extends Model
     public function delete()
     {
         if (!$result = $this->db->query("DELETE FROM `account` WHERE `account_id` = $this->id;")) {
-            throw new BankException(99,'Delete account failed: '.mysqli_error($this->db));
+            throw new BankException(99, 'Delete account failed: ' . mysqli_error($this->db));
         }
 
         return $this;
     }
 
-    private function updateBalance($amount, $transType) {
+    private function updateBalance($amount, $transType)
+    {
         $id = $this->id;
         $balance = $this->balance;
         $done = true;
@@ -157,37 +158,35 @@ class AccountModel extends Model
         )) {
             $done = true;
         }
-        if ($done){
+        if ($done) {
             if (!$result = $this->db->query(
-            "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `trans_datetime`, `account_id`)
+                "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `trans_datetime`, `account_id`)
                     VALUES ('$transType', '$amount', NOW(), '$id');"
-        )) {
-            throw new BankException(99,'Error Updating Transaction '.mysqli_error($this->db));
-        }
+            )) {
+                throw new BankException(99, 'Error Updating Transaction ' . mysqli_error($this->db));
+            }
         }
     }
 
-    public function deposit($amount) {
+    public function deposit($amount)
+    {
         $this->balance += $amount;
         $transType = 'Deposit';
         try {
             $this->updateBalance($amount, $transType);
-        }
-        catch (BankException $e) {
+        } catch (BankException $e) {
             throw $e;
         }
     }
 
-    public function withdraw($amount) {
+    public function withdraw($amount)
+    {
         $this->balance -= $amount;
         $transType = 'Withdraw';
         try {
             $this->updateBalance($amount, $transType);
-        }
-        catch (BankException $e) {
+        } catch (BankException $e) {
             throw $e;
         }
     }
-
-
 }

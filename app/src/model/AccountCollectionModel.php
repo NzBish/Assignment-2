@@ -25,14 +25,14 @@ class AccountCollectionModel extends Model
         if (isset($userName)) {
             if ($userName == "admin") {
                 if (!$result = $this->db->query("SELECT `account_id` FROM `account`;")) {
-                    throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+                    throw new BankException(99, 'DB query failed: ' . mysqli_error($this->db));
                 }
                 if ($result->num_rows < 1) {
-                    throw new BankException(99,"Accounts table is empty");
+                    throw new BankException(99, "Accounts table is empty");
                 }
             } else {
                 if (!$result = $this->db->query("SELECT `account_id` FROM `account` WHERE `user_id`=$userId;")) {
-                    throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+                    throw new BankException(99, 'DB query failed: ' . mysqli_error($this->db));
                 }
                 if ($result->num_rows < 1) {
                     throw new BankException(9);

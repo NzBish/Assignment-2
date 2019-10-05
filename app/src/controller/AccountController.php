@@ -69,8 +69,12 @@ class AccountController extends Controller
                     $account->setBalance(0.0);
                     //$account->setDateStarted(date("d/m/Y"));
                     $account->save();
-                    if (!$account) { throw new BankException(0); }
-                    if (isset($_SESSION['noAcc'])) { unset($_SESSION['noAcc']); }
+                    if (!$account) {
+                        throw new BankException(0);
+                    }
+                    if (isset($_SESSION['noAcc'])) {
+                        unset($_SESSION['noAcc']);
+                    }
                     if ($_POST['makeDeposit']) {
                         $this->redirect('accountDeposit', ['id' => $account->getId()]);
                     } else {
@@ -108,7 +112,10 @@ class AccountController extends Controller
             echo $view->addData('accountId', $id)->render();
         } else {
             $view = new View('exception');
-            echo $view->addData("exception", (new BankException(99,"Closing account via internet banking unavailable. Please contact us by phone to close an account")))->addData("back", "accountIndex")->render();
+            echo $view->addData("exception", (new BankException(
+                99,
+                "Closing account via internet banking unavailable. Please contact us by phone to close an account"
+            )))->addData("back", "accountIndex")->render();
         }
     }
 
@@ -160,17 +167,18 @@ class AccountController extends Controller
             try {
                 $account = (new AccountModel())->load($id);
                 $withdrawalAmount = $_POST['withdrawalAmount'];
-                if($withdrawalAmount <= $account->getBalance()) {
+                if ($withdrawalAmount <= $account->getBalance()) {
                     $account->withdraw($_POST['withdrawalAmount']);
                     $account->save();
-                }else{
-                    throw new BankException(99,"You can't withdraw more than than your balance");
+                } else {
+                    throw new BankException(99, "You can't withdraw more than than your balance");
                 }
                 if (!$account) {
                     throw new BankException(0);
                 }
                 $view = new View('accountWithdrawn');
-                echo $view->addData("amount", $_POST['withdrawalAmount'])->addData("account", $account)->addData("back", "accountIndex")->render();
+                echo $view->addData("amount", $_POST['withdrawalAmount'])
+                    ->addData("account", $account)->addData("back", "accountIndex")->render();
             } catch (BankException $ex) {
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
@@ -179,6 +187,5 @@ class AccountController extends Controller
             $view = new View('accountWithdraw');
             echo $view->render();
         }
-
     }
 }

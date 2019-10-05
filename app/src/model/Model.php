@@ -25,13 +25,12 @@ class Model
         $dbUser = $envs['MYSQL_USER'];
         $dbPass = $envs['MYSQL_PASSWORD'];
         $this->db = new mysqli(
-                $dbHost,
-                $dbUser,
-                $dbPass
-            );
+            $dbHost,
+            $dbUser,
+            $dbPass
+        );
 
-        if (!$this->db)
-        {
+        if (!$this->db) {
             throw new BankException($this->db->connect_error);
         }
 
@@ -44,7 +43,7 @@ class Model
         if (!$this->db->select_db($dbName)) {
             // somethings not right.. handle it
             throw new BankException("Mysql database not available!");
-        }      
+        }
 
         //defining strings for table creation
 
@@ -66,7 +65,8 @@ class Model
                                         `user_id` INT, 
                                         `account_dateStarted` DATETIME NOT NULL,                                       
                                         PRIMARY KEY (account_id),
-                                        CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE)";
+                                        CONSTRAINT FK_user FOREIGN KEY (user_id) 
+                                        REFERENCES user(user_id) ON DELETE CASCADE)";
 
         $databaseTransaction = "CREATE TABLE `transaction` (
                                         `trans_id` INT NOT NULL AUTO_INCREMENT, 
@@ -75,18 +75,15 @@ class Model
                                         `trans_datetime` DATETIME NOT NULL,
                                         `account_id` INT,                                
                                         PRIMARY KEY (trans_id),
-                                        CONSTRAINT FK_account FOREIGN KEY (account_id) REFERENCES account(account_id) ON DELETE CASCADE);";
+                                        CONSTRAINT FK_account FOREIGN KEY (account_id) 
+                                        REFERENCES account(account_id) ON DELETE CASCADE);";
 
 
 
-        $this->buildTable('user',$databaseUser);
-        $this->buildTable('account',$databaseAccount);
-        $this->buildTable('transaction',$databaseTransaction); 
-        $this->buildTableData();     
-
-            
-        
-       
+        $this->buildTable('user', $databaseUser);
+        $this->buildTable('account', $databaseAccount);
+        $this->buildTable('transaction', $databaseTransaction);
+        $this->buildTableData();
     }
     public function buildTable($tableName, $table)
     {
@@ -98,10 +95,9 @@ class Model
             $result = $this->db->query($table);
             if (!$result) {
                 // handle appropriately
-               throw new BankException("Failed creating table ".$tableName);
+                throw new BankException("Failed creating table " . $tableName);
             }
         }
-
     }
     public function buildTableData()
     {
@@ -113,9 +109,12 @@ class Model
         }
 
         //strings to insert data
-        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin', 'admin@ktc.com', 'Call KTC instead', '1970-01-01'),
-                                                 (NULL, 'CBishop', 'Chris', 'Bishop', '$password', 'chris@gmail.com', '1111', '1972-03-20'),
-                                                 (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 'mary@gmail.com','2222', '2000-01-01');";
+        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin',
+                                                 'admin@ktc.com', 'Call KTC instead', '1970-01-01'),
+                                                 (NULL, 'CBishop', 'Chris', 'Bishop', '$password',
+                                                  'chris@gmail.com', '1111', '1972-03-20'),
+                                                 (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 
+                                                  'mary@gmail.com','2222', '2000-01-01');";
 
         $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,2,'2019-10-03 10:42:16'),
                                                        (NULL,'CreditCard',20,2,'2019-10-02 10:42:16'),
@@ -131,19 +130,18 @@ class Model
          //check if already inserted
         $result = $this->db->query("SELECT * FROM `user`;");
 
-        if ($result->num_rows == 0) {        
-
+        if ($result->num_rows == 0) {
             if (!$this->db->query($insertUser)) {
                 // handle appropriately
-                throw new BankException(99, "Failed creating sample user data! ".mysqli_error($this->db));
+                throw new BankException(99, "Failed creating sample user data! " . mysqli_error($this->db));
             }
             if (!$this->db->query($insertAccount)) {
                 // handle appropriately
-                throw new BankException(99,"Failed creating sample account data! ".mysqli_error($this->db));
+                throw new BankException(99, "Failed creating sample account data! " . mysqli_error($this->db));
             }
             if (!$this->db->query($insertTransaction)) {
                 // handle appropriately
-                throw new BankException(99,"Failed creating sample transaction data! ".mysqli_error($this->db));
+                throw new BankException(99, "Failed creating sample transaction data! " . mysqli_error($this->db));
             }
         }
     }

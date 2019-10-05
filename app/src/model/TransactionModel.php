@@ -78,10 +78,11 @@ class TransactionModel extends Model
     public function load($id)
     {
         if (!$result = $this->db->query(
-            "SELECT * FROM `transaction` WHERE `trans_id` = $id;")) {
-            throw new BankException('No transaction found with id '.$id);
+            "SELECT * FROM `transaction` WHERE `trans_id` = $id;"
+        )) {
+            throw new BankException('No transaction found with id ' . $id);
         }
-        if($result->num_rows > 0) {
+        if ($result->num_rows > 0) {
             $result = $result->fetch_assoc();
             $this->id = $id;
             $this->type = $result['trans_type'];
@@ -102,17 +103,14 @@ class TransactionModel extends Model
         if (!isset($this->id)) {
             // New transaction - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `transaction` VALUES
-                                        (NULL,'$type','$amount','$dateTime','$accountId');"))
-            {
-                throw new BankException(99,"Insert transaction failed");
+                                        (NULL,'$type','$amount','$dateTime','$accountId');")) {
+                throw new BankException(99, "Insert transaction failed");
             }
             $this->id = $this->db->insert_id;
         } else {
-            throw new BankException(99,"Transactions should not be updated");
+            throw new BankException(99, "Transactions should not be updated");
         }
 
         return $this;
     }
-
-
 }

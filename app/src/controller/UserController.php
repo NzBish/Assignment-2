@@ -54,7 +54,7 @@ class UserController extends Controller
                     session_start();
                     $_SESSION['userName'] = $user->getUserName();
                     $_SESSION['userId'] = $user->getId();
-                    $_SESSION['userFull'] = $user->getFirstName()." ".$user->getLastName();
+                    $_SESSION['userFull'] = $user->getFirstName() . " " . $user->getLastName();
                     $this->redirect('accountIndex');
                 } else {
                     throw new BankException(4); // Maybe not an exception?
@@ -103,11 +103,11 @@ class UserController extends Controller
                 $user->setPassword($passHash);
                 $user->setEmail($_POST['email']);
                 $user->setPhone($_POST['phone']);
-                $user->setDateOfBirth(date("d/m/Y",$_POST['dob']));
+                $user->setDateOfBirth(date("d/m/Y", $_POST['dob']));
                 $user->save();
                 $_SESSION['userName'] = $user->getUserName();
                 $_SESSION['userId'] = $user->getId();
-                $_SESSION['userFull'] = $user->getFirstName()." ".$user->getLastName();
+                $_SESSION['userFull'] = $user->getFirstName() . " " . $user->getLastName();
                 $this->redirect('accountIndex');
             } else {
                 $view = new View('userCreate');

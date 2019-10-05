@@ -129,10 +129,10 @@ class UserModel extends Model
     public function load($name)
     {
         if (!$result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';")) {
-            throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+            throw new BankException(99, 'DB query failed: ' . mysqli_error($this->db));
         }
         if ($result->num_rows < 1) {
-            throw new BankException(99,'No user found with username '.$name);
+            throw new BankException(99, 'No user found with username ' . $name);
         }
         if ($result->num_rows == 1) {
             $result = $result->fetch_assoc();
@@ -145,7 +145,7 @@ class UserModel extends Model
             $this->phone = $result['user_phNumber'];
             $this->dateOfBirth = $result['user_dob'];
         } else {
-            throw new BankException(99,'Username '.$name.' is not unique');
+            throw new BankException(99, 'Username ' . $name . ' is not unique');
         }
 
         return $this;

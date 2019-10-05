@@ -13,14 +13,14 @@ namespace ktc\a2\Exception;
 
 class BankException extends \Exception
 {
-   public function BankException($message)
-   {
-       parent::__construct($message);
-   }
+    public function bankException($message)
+    {
+        parent::__construct($message);
+    }
 
     public function __construct($code = 0, $message = "")
     {
-        switch($code) {
+        switch ($code) {
             case 0:
                 $message = 'Failed to load account';
                 break;

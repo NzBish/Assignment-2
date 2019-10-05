@@ -11,7 +11,7 @@
     <h1>KTC BANKING</h1>
     <div class="header-right">
         <?php if (isset($_SESSION['userName'])) { ?>
-        <p>Welcome <?php echo $_SESSION['userFull'] ?></p>
+        <p>Welcome <?php echo $_SESSION['userName'] ?></p>
         <?php } ?>
         <a href=<?= $linkTo('Home') ?>>Home</a>
         <?php if (isset($_SESSION['userName'])) { ?>

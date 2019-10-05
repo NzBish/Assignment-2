@@ -9,7 +9,7 @@ use ktc\a2\view\View;
  * Class TransactionController
  *
  * @package ktc/a2
- * @author
+ * @author  Andrew Gilman <a.gilman@massey.ac.nz>
  */
 
 class TransactionController extends Controller

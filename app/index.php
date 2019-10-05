@@ -1,12 +1,16 @@
 <?php
 /**
  * 159.339 Internet Programming 2019.2
+ *
  * Student ID: 15309679
  * Student Name: Katie Dempsey
+ *
  * Student ID: 15309679
  * Student Name: Tony Crompton
+ *
  * Student ID: 15309679
  * Student Name: Chris Bishop
+ *
  * Assignment: 2   Date: 01/09/19
  * System: PHP 7.1
  * Code guidelines: PSR-1, PSR-12

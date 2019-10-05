@@ -6,8 +6,9 @@ namespace ktc\a2\Exception;
  * Class BankException
  *
  * @package ktc/a2
- *
- * @author
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
  */
 
 class BankException extends \Exception

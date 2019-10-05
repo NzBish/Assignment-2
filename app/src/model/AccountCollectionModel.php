@@ -8,6 +8,10 @@ use ktc\a2\Exception\BankException;
  *
  * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
+ *
  */
 class AccountCollectionModel extends Model
 {

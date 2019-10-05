@@ -9,7 +9,10 @@ use ktc\a2\Exception\BankException;
  * Class TransactionCollectionModel
  *
  * @package ktc/a2
- * @author
+ * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
  */
 class TransactionCollectionModel extends Model
 {

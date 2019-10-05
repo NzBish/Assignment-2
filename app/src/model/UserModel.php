@@ -7,7 +7,10 @@ use ktc\a2\Exception\BankException;
  * Class UserModel
  *
  * @package ktc/a2
- * @author
+ * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
  */
 class UserModel extends Model
 {

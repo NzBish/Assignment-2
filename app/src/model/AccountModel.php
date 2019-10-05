@@ -8,9 +8,9 @@ use ktc\a2\Exception\BankException;
  *
  * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
- * @author  Katie Dempsey
- * @author  Tony Crompton
- * @author  Chris Bishop
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
  */
 class AccountModel extends Model
 {

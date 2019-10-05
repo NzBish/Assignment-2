@@ -33,7 +33,7 @@ class TransactionModel extends Model
         return $this->type;
     }
 
-    public function setType(string $type)
+    public function setType($type)
     {
         $this->type = $type;
 

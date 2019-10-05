@@ -4,7 +4,6 @@ namespace ktc\a2\controller;
 use ktc\a2\Exception\BankException;
 use ktc\a2\model\AccountModel;
 use ktc\a2\model\AccountCollectionModel;
-use ktc\a2\model\TransactionModel;
 use ktc\a2\view\View;
 
 /**
@@ -30,6 +29,8 @@ class AccountController extends Controller
                 $view = new View('accountIndex');
                 echo $view->addData('accounts', $accounts)->render();
             } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "Home")->render();
                 if ($ex->getCode() == 9) {
                     $this->redirect('accountCreate');
                 } else {
@@ -50,21 +51,24 @@ class AccountController extends Controller
     {
         session_start();
         if (isset($_POST['create'])) {
-            $account = new AccountModel();
-            $account->setType($_POST['accountType']);
-            $account->setUser($_POST['userID']);
-            $account->setBalance(0.0);
-            $account->setDateStarted(date("d/m/y"));
-            $account->save();
-            if(!$account)
-            {
-                throw new BankException(0);
+            try {
+                $account = new AccountModel();
+                $account->setType($_POST['accountType']);
+                $account->setUser($_SESSION['userId']);
+                $account->setBalance(0.0);
+                $account->save();
+                if ($_POST['accountType']) {
+                    throw new BankException(12);
+                }
+                $view = new View('accountCreated');
+                echo $view->addData("back", "accountIndex")->render();
+            } catch (BankException $ex) {
+                    $view = new View('exception');
+                    echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
             }
-            $view = new View('accountCreate');
-            echo $view->render();
-        } else{
-            $view = new View('accountCreate');
-            echo $view->render();
+        } else {
+        $view = new View('accountCreate');
+        echo $view->render();
         }
     }
 
@@ -79,11 +83,15 @@ class AccountController extends Controller
         session_start();
         try {
             (new AccountModel())->load($id)->delete();
-        } catch (BankException $e) {
-            throw new BankException('Failed to load account');
+            if (!$id) {
+                throw new BankException(11);
+            }
+        } catch (BankException $ex) {
+            $view = new View('exception');
+            echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
         }
         $view = new View('accountDeleted');
-        echo $view->addData('accountId', $id)->render();
+        echo $view->addData("back", "accountIndex")->render();
     }
 
     /**
@@ -97,8 +105,12 @@ class AccountController extends Controller
         session_start();
         try {
             $account = (new AccountModel())->load($id);
-        } catch (BankException $e) {
-            throw new BankException('Failed to load account');
+            if (!$account) {
+                throw new BankException(0);
+            }
+        } catch (BankException $ex) {
+            $view = new View('exception');
+            echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();
         }
         $account->setName('Joe')->save(); // new name will come from Form data
     }

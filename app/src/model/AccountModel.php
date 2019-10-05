@@ -43,7 +43,7 @@ class AccountModel extends Model
         return $this->type;
     }
 
-    public function setType(string $type)
+    public function setType($type)
     {
         $this->type = mysqli_real_escape_string($this->db, $type);
 
@@ -55,7 +55,7 @@ class AccountModel extends Model
         return $this->balance;
     }
 
-    public function setBalance(float $balance)
+    public function setBalance($balance)
     {
         $this->balance = $balance;
         return $this;
@@ -66,7 +66,7 @@ class AccountModel extends Model
         return $this->user;
     }
 
-    public function setUser(int $user)
+    public function setUser($user)
     {
         $this->user = $user;
         return $this;
@@ -77,9 +77,9 @@ class AccountModel extends Model
         return $this->dateStarted;
     }
 
-    public function setDateStarted(string $date)
+    public function setDateStarted()
     {
-        $this->dateStarted = mysqli_real_escape_string($this->db, $date);
+        $this->dateStarted = $this->db->query("SELECT NOW();");
         return $this;
     }
 
@@ -114,11 +114,11 @@ class AccountModel extends Model
         $type = $this->type ?? "NULL";
         $balance = $this->balance ?? "NULL";
         $user = $this->user ?? "NULL";
-        $dateStarted = $this->dateStarted ?? "NULL";
+        //$dateStarted = $this->dateStarted ?? "NULL";
         if (!isset($this->id)) {
             // New account - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `account` VALUES
-                                        (NULL,'$type','$balance','$user','$dateStarted');"))
+                                        (NULL,'$type','$balance','$user',NOW());"))
             {
                 throw new BankException("Insert account failed");
             }
@@ -160,8 +160,8 @@ class AccountModel extends Model
         }
         if ($done){
             if (!$result = $this->db->query(
-            "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `account_id`)
-                    VALUES ('$transType', '$amount', '$id');"
+            "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `trans_datetime`, `account_id`)
+                    VALUES ('$transType', '$amount', NOW(), '$id');"
         )) {
             throw new BankException(99,'Error Updating Transaction '.mysqli_error($this->db));
         }

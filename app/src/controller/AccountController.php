@@ -57,7 +57,7 @@ class AccountController extends Controller
                 $account->setUser($_SESSION['userId']);
                 $account->setBalance(0.0);
                 $account->save();
-                if ($_POST['accountType']) {
+                if (!$account) {
                     throw new BankException(12);
                 }
                 $view = new View('accountCreated');

@@ -29,6 +29,8 @@ class AccountController extends Controller
                 $view = new View('accountIndex');
                 echo $view->addData('accounts', $accounts)->render();
             } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "Home")->render();
                 if ($ex->getCode() == 9) {
                     $_SESSION['noAcc'] = true;
                     $this->redirect('accountCreate');
@@ -62,7 +64,7 @@ class AccountController extends Controller
                         $account->setUser($_SESSION['userId']);
                     }
                     $account->setBalance(0.0);
-                    $account->setDateStarted(date("d/m/Y"));
+                    //$account->setDateStarted(date("d/m/Y"));
                     $account->save();
                     if (!$account) { throw new BankException(0); }
                     if (isset($_SESSION['noAcc'])) { unset($_SESSION['noAcc']); }
@@ -160,7 +162,7 @@ class AccountController extends Controller
                     throw new BankException(0);
                 }
                 $view = new View('accountWithdrawn');
-                echo $view->addData("amount", $_POST['withdrawalAmount'])->addData("account", $account)->render();
+                echo $view->addData("amount", $_POST['withdrawalAmount'])->addData("account", $account)->addData("back", "accountIndex")->render();
             } catch (BankException $ex) {
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "accountIndex")->render();

@@ -8,6 +8,9 @@ use ktc\a2\Exception\BankException;
  *
  * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  Katie Dempsey
+ * @author  Tony Crompton
+ * @author  Chris Bishop
  */
 class AccountModel extends Model
 {
@@ -40,7 +43,7 @@ class AccountModel extends Model
         return $this->type;
     }
 
-    public function setType(string $type)
+    public function setType($type)
     {
         $this->type = mysqli_real_escape_string($this->db, $type);
 
@@ -52,7 +55,7 @@ class AccountModel extends Model
         return $this->balance;
     }
 
-    public function setBalance(float $balance)
+    public function setBalance($balance)
     {
         $this->balance = $balance;
         return $this;
@@ -63,10 +66,9 @@ class AccountModel extends Model
         return $this->user;
     }
 
-    public function setUser(int $user)
+    public function setUser($user)
     {
         $this->user = $user;
-
         return $this;
     }
 
@@ -75,9 +77,9 @@ class AccountModel extends Model
         return $this->dateStarted;
     }
 
-    public function setDateStarted(string $date)
+    public function setDateStarted()
     {
-        $this->dateStarted = mysqli_real_escape_string($this->db, $date);
+        $this->dateStarted = $this->db->query("SELECT NOW();");
         return $this;
     }
 
@@ -112,11 +114,11 @@ class AccountModel extends Model
         $type = $this->type ?? "NULL";
         $balance = $this->balance ?? "NULL";
         $user = $this->user ?? "NULL";
-        $dateStarted = $this->dateStarted ?? "NULL";
+        //$dateStarted = $this->dateStarted ?? "NULL";
         if (!isset($this->id)) {
             // New account - Perform INSERT
             if (!$result = $this->db->query("INSERT INTO `account` VALUES
-                                        (NULL,'$type','$balance','$user','$dateStarted');"))
+                                        (NULL,'$type','$balance','$user',NOW());"))
             {
                 throw new BankException(99,'Insert account failed: '.mysqli_error($this->db));
             }
@@ -126,8 +128,7 @@ class AccountModel extends Model
             if (!$result = $this->db->query("UPDATE `account` SET
                                         `account_type` = '$type',
                                         `account_bal` = '$balance',
-                                        `user_id` = '$user',
-                                        `account_dateStarted` = '$dateStarted'
+                                        `user_id` = '$user'
                                          WHERE `account_id` = $id;")) {
                 throw new BankException(99,'Update account failed: '.mysqli_error($this->db));
             }
@@ -145,22 +146,32 @@ class AccountModel extends Model
         return $this;
     }
 
-    private function updateBalance() {
-        $id =  $this->id;
+    private function updateBalance($amount, $transType) {
+        $id = $this->id;
         $balance = $this->balance;
+        $done = true;
         if (!$result = $this->db->query(
             "UPDATE `account`
             SET `account_bal` = $balance
             WHERE `account_id` = $id;"
         )) {
-            throw new BankException(99,'Couldn\'t update balance: '.mysqli_error($this->db));
+            $done = true;
+        }
+        if ($done){
+            if (!$result = $this->db->query(
+            "INSERT INTO `transaction`(`trans_type`, `trans_amount`, `trans_datetime`, `account_id`)
+                    VALUES ('$transType', '$amount', NOW(), '$id');"
+        )) {
+            throw new BankException(99,'Error Updating Transaction '.mysqli_error($this->db));
+        }
         }
     }
 
     public function deposit($amount) {
         $this->balance += $amount;
+        $transType = 'Deposit';
         try {
-            $this->updateBalance();
+            $this->updateBalance($amount, $transType);
         }
         catch (BankException $e) {
             throw $e;
@@ -169,8 +180,9 @@ class AccountModel extends Model
 
     public function withdraw($amount) {
         $this->balance -= $amount;
+        $transType = 'Withdraw';
         try {
-            $this->updateBalance();
+            $this->updateBalance($amount, $transType);
         }
         catch (BankException $e) {
             throw $e;

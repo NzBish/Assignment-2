@@ -36,7 +36,7 @@ class BankException extends \Exception
                 $message = 'Invalid username or password';
                 break;
             case 5:
-                $message = 'User with this name already exists';
+                $message = 'Username already exists';
                 break;
             case 6:
                 $message = 'Failed to hash entered password';

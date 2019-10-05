@@ -24,7 +24,7 @@ class AccountCollectionModel extends Model
                     throw new BankException(99,"Account db table is empty");
                 }
             } else {
-                if (!$result = $this->db->query("SELECT `account_id` FROM `account` WHERE `user_id` IS '$userId';")) {
+                if (!$result = $this->db->query("SELECT `account_id` FROM `account` WHERE `user_id`=$userId;")) {
                     throw new BankException(9);
                 }
             }

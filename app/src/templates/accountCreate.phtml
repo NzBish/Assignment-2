@@ -1,17 +1,33 @@
 <?php include "header.phtml" ?>
 <!---------- Body starts --------------->
+    <?php if (isset($noAccounts)) {
+       echo "<p> You don't have any accounts yet, please create one: </p>";
+    }?>
     <form method="POST">
         <table>
-            <tr>
-                <td><label>Account Type</label></td>
-                <td><label>
-                        <input name="accountType" placeholder="Enter Type" required>
-                    </label></td>
-            </tr>
+            <?php if ($_SESSION['userName'] == "admin") { ?>
             <tr>
                 <td><label>User ID</label></td>
                 <td><label>
-                        <input name="userID" placeholder="Enter User ID"  required>
+                        <input type="number" min=1 name="userId" placeholder="Enter a valid user ID" required>
+                    </label></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <td><label>Account Type</label></td>
+                <td><label>
+                        <select name="accountType">
+                            <option value="undefined" default>Please choose an account type...</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Credit Card">Credit Card</option>
+                        </select>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Initial Deposit</label></td>
+                <td><label>
+                        <input type="checkbox" name="makeDeposit">Make an initial deposit?
                     </label></td>
             </tr>
             <tr>

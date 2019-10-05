@@ -51,25 +51,25 @@ class Model
                                         `user_first` VARCHAR(30) NOT NULL, 
                                         `user_last` VARCHAR(30) NOT NULL,
                                         `user_pass` VARCHAR(72) NOT NULL,                         
-                                        `user_email` VARCHAR(30) NOT NULL,
+                                        `user_email` VARCHAR(50) NOT NULL,
                                         `user_phNumber` VARCHAR(30) NOT NULL,                                        
-                                        `user_dob` VARCHAR(20) NOT NULL,
+                                        `user_dob` DATE NOT NULL,
                                         Primary key (user_id));";
 
         $databaseAccount = "CREATE TABLE `account` (
                                         `account_id` INT NOT NULL AUTO_INCREMENT,
-                                        `account_type` VARCHAR(30) NOT NULL, 
+                                        `account_type` 	SET('Savings', 'CreditCard', 'Cheque') NOT NULL, 
                                         `account_bal` DECIMAL(20,2) NOT NULL,
                                         `user_id` INT, 
-                                        `account_dateStarted` VARCHAR(20) NOT NULL,                                       
+                                        `account_dateStarted` DATETIME NOT NULL,                                       
                                         PRIMARY KEY (account_id),
                                         CONSTRAINT FK_user FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE)";
 
         $databaseTransaction = "CREATE TABLE `transaction` (
                                         `trans_id` INT NOT NULL AUTO_INCREMENT, 
-                                        `trans_type` CHAR(10) NOT NULL,
+                                        `trans_type` SET('Deposit', 'Withdraw') NOT NULL,
                                         `trans_amount` DECIMAL(15,2) NOT NULL,
-                                        `trans_datetime` VARCHAR(20) NOT NULL,
+                                        `trans_datetime` DATETIME NOT NULL,
                                         `account_id` INT,                                
                                         PRIMARY KEY (trans_id),
                                         CONSTRAINT FK_account FOREIGN KEY (account_id) REFERENCES account(account_id) ON DELETE CASCADE);";
@@ -110,19 +110,19 @@ class Model
         }
 
         //strings to insert data
-        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin', 'admin@ktc.com', 'Call KTC instead', '01/01/1970'),
-                                                 (NULL, 'CBishop', 'Chris', 'Bishop', '$password', 'chris@gmail.com', '1111', '20/03/1972'),
-                                                 (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 'mary@gmail.com','2222', '01/01/2000');";
+        $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin', 'admin@ktc.com', 'Call KTC instead', '1970-01-01'),
+                                                 (NULL, 'CBishop', 'Chris', 'Bishop', '$password', 'chris@gmail.com', '1111', '1972-03-20'),
+                                                 (NULL, 'MLittleLamb', 'Mary','LittleLamb', '$password', 'mary@gmail.com','2222', '2000-01-01');";
 
-        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,2,'01/02/2003'),
-                                                       (NULL,'Credit Card',20,2,'02/02/2003'),
-                                                       (NULL,'Savings',300,3,'02/12/2018'),
-                                                       (NULL,'Credit Card',50,3,'02/12/2018');";
+        $insertAccount = "INSERT INTO `account` VALUES (NULL,'Savings',10000,2,'2019-10-03 10:42:16'),
+                                                       (NULL,'CreditCard',20,2,'2019-10-02 10:42:16'),
+                                                       (NULL,'Savings',300,3,'2019-10-01 10:42:16'),
+                                                       (NULL,'CreditCard',50,3,'2019-10-01 10:42:16');";
 
-        $insertTransaction = "INSERT INTO `transaction` VALUES (NULL,'Deposit',20,'25/09/2019',1),
-                                                               (NULL,'Withdraw',3,'2/02/2018',2),
-                                                               (NULL,'Withdraw',40,'25/06/2019',3),
-                                                               (NULL,'Deposit',50,'25/09/2019',4);";
+        $insertTransaction = "INSERT INTO `transaction` VALUES (NULL,'Deposit',20,'2019-10-04 10:42:16',1),
+                                                               (NULL,'Withdraw',3,'2019-10-04 10:42:16',2),
+                                                               (NULL,'Withdraw',40,'2019-10-04 10:42:16',3),
+                                                               (NULL,'Deposit',50,'2019-10-04 10:42:16',4);";
 
 
          //check if already inserted

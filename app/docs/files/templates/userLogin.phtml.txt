@@ -1,0 +1,29 @@
+<?php include "header.phtml" ?>
+<!---------- Body starts --------------->
+    <form method="POST">
+        <table>
+            <tr>
+                <td><label>Username</label></td>
+                <td><label>
+                        <input name="userName" placeholder="Enter username" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>User ID</label></td>
+                <td><label>
+                        <input type="password" name="password" placeholder="Enter password" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button name="login" type="submit" class="btn btn-default" value="submit">Log in</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <div>
+        <a class="prettybutton" href= <?= $linkTo('userCreate') ?>>Create a user</a>
+    </div>
+<!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>
+

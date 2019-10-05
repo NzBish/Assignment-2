@@ -1,0 +1,42 @@
+<?php include "header.phtml" ?>
+<!---------- Body starts --------------->
+    <?php if (isset($_SESSION['noAcc'])) { ?>
+    <p> You don't have any accounts yet, please create one: </p>
+    <?php } ?>
+    <form method="POST">
+        <table>
+            <?php if ($_SESSION['userName'] == "admin") { ?>
+            <tr>
+                <td><label>User ID</label></td>
+                <td><label>
+                        <input type="number" min=1 name="userId" placeholder="Enter a valid user ID" required>
+                    </label></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <td><label>Account Type</label></td>
+                <td><label>
+                        <select name="accountType">
+                            <option value="undefined" default>Please choose an account type...</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Cheque">Cheque</option>
+                            <option value="Credit Card">Credit Card</option>
+                        </select>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Initial Deposit</label></td>
+                <td><label>
+                        <input type="checkbox" name="makeDeposit">Make an initial deposit?
+                    </label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button name="create" type="submit" class="btn btn-default" value="submit">Create</button></td>
+            </tr>
+        </table>
+    </form>
+
+<br>
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

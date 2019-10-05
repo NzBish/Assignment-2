@@ -1,0 +1,10 @@
+<?php include "header.phtml" ?>
+<!---------- Body starts --------------->
+<div>
+    <p>Account <?= $accountId ?> closed successfully</p>
+    <br>
+    <a class='prettybutton' href=<?= $linkTo('accountIndex') ?>>Back to Accounts</a>
+    <br>
+</div>
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

@@ -1,0 +1,56 @@
+<?php include "header.phtml" ?>
+    <!---------- Body starts --------------->
+    <form method="POST">
+        <table>
+            <tr>
+                <td><label>Username</label></td>
+                <td><label>
+                        <input name="userName" placeholder="Enter desired username" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Password</label></td>
+                <td><label>
+                        <input type="password" name="password" placeholder="Enter password"  required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>First Name</label></td>
+                <td><label>
+                        <input name="firstName" placeholder="Enter your first name" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Last Name</label></td>
+                <td><label>
+                        <input name="lastName" placeholder="Enter your last name" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Email Address</label></td>
+                <td><label>
+                        <input name="email" placeholder="Enter your email address" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Phone Number</label></td>
+                <td><label>
+                        <input name="phone" placeholder="Enter your phone number" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td><label>Date of Birth</label></td>
+                <td><label>
+                        <input type="date" name="dob" required>
+                    </label></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button name="create" type="submit" class="btn btn-default" value="submit">Create</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <br>
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

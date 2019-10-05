@@ -1,0 +1,11 @@
+<?php include "header.phtml" ?>
+<!---------- Body starts --------------->
+<div>
+    <p>Account successfully created.</p>
+    <br>
+    <a class='prettybutton' href=<?= $linkTo($back); ?>>Back to Accounts</a>
+    <br>
+</div>
+<!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>
+

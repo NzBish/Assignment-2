@@ -1,8 +1,8 @@
 <?php include "header.phtml" ?>
 <!---------- Body starts --------------->
-    <?php if (isset($noAccounts)) {
-       echo "<p> You don't have any accounts yet, please create one: </p>";
-    }?>
+    <?php if (isset($_SESSION['noAcc'])) { ?>
+    <p> You don't have any accounts yet, please create one: </p>
+    <?php } ?>
     <form method="POST">
         <table>
             <?php if ($_SESSION['userName'] == "admin") { ?>

@@ -30,8 +30,8 @@ class AccountController extends Controller
                 echo $view->addData('accounts', $accounts)->render();
             } catch (BankException $ex) {
                 if ($ex->getCode() == 9) {
-                    $view = new View('accountCreate');
-                    echo $view->addData('noAccounts',"TRUE")->render();
+                    $_SESSION['noAcc'] = true;
+                    $this->redirect('accountCreate');
                 } else {
                     $view = new View('exception');
                     echo $view->addData("exception", $ex)->addData("back", "Home")->render();
@@ -64,14 +64,13 @@ class AccountController extends Controller
                     $account->setBalance(0.0);
                     $account->setDateStarted(date("d/m/Y"));
                     $account->save();
-                    if (!$account) {
-                        throw new BankException(0);
-                    }
+                    if (!$account) { throw new BankException(0); }
+                    if (isset($_SESSION['noAcc'])) { unset($_SESSION['noAcc']); }
                     if ($_POST['makeDeposit']) {
-                        $view = new View('accountDeposit');
-                        echo $view->addData("id",$_SESSION['userId'])->render();
+                        $this->redirect('accountDeposit', ['id' => $account->getId()]);
+                    } else {
+                        $this->redirect('accountIndex');
                     }
-                    $this->redirect('accountIndex');
                 } catch (BankException $ex) {
                     $view = new View('exception');
                     echo $view->addData("exception", $ex)->addData("back", "Home")->render();

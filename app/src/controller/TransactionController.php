@@ -29,13 +29,6 @@ class TransactionController extends Controller
             } catch (BankException $ex) {
                 $view = new View('exception');
                 echo $view->addData("exception", $ex)->addData("back", "Home")->render();
-                if ($ex->getCode() == 9) {
-                    $_SESSION['noAcc'] = true;
-                    $this->redirect('accountCreate');
-                } else {
-                    $view = new View('exception');
-                    echo $view->addData("exception", $ex)->addData("back", "Home")->render();
-                }
             }
         } else {
             $this->redirect('Home');

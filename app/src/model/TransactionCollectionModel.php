@@ -40,7 +40,7 @@ class TransactionCollectionModel extends Model
                     throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
                 }
                 if ($result->num_rows < 1) {
-                    throw new BankException(9);
+                    throw new BankException(99,"No transactions found for this user");
                 }
             }
         } else {

@@ -20,12 +20,33 @@ class TransactionCollectionModel extends Model
 
     private $N;
 
-    public function __construct()
+    public function __construct($userName, $userId)
     {
         parent::__construct();
-        if (!$result = $this->db->query("SELECT `trans_id` FROM `transaction`;")) {
-            throw new BankException("Transaction db table is empty");
+        if (isset($userName)) {
+            if ($userName == "admin") {
+                if (!$result = $this->db->query("SELECT `trans_id` FROM `transaction`;")) {
+                    throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+                }
+                if ($result->num_rows < 1) {
+                    throw new BankException(99,"Transaction table is empty");
+                }
+            } else {
+                if (!$result = $this->db->query("SELECT t.`trans_id` FROM `transaction` As t 
+                                                                    INNER JOIN `account` AS a
+                                                                    WHERE t.`account_id` = a.`account_id`
+                                                                    AND a.`user_id`=$userId
+                                                                    ORDER BY t.`trans_datetime` DESC;")) {
+                    throw new BankException(99,'DB query failed: '.mysqli_error($this->db));
+                }
+                if ($result->num_rows < 1) {
+                    throw new BankException(9);
+                }
+            }
+        } else {
+            throw new BankException(8);
         }
+
         $this->transIds = array_column($result->fetch_all(), 0);
         $this->N = $result->num_rows;
     }

@@ -18,9 +18,30 @@ class TransactionController extends Controller
     public function indexAction()
     {
         session_start();
-        $collection = new TransactionCollectionModel();
-        $transactions = $collection->getTransactions();
-        $view = new View('transactionIndex');
-        echo $view->addData('transactions', $transactions)->render();
+        if (isset($_SESSION['userName'])) {
+            try {
+                $userName = $_SESSION['userName'];
+                $userId = $_SESSION['userId'];
+                $collection = new TransactionCollectionModel($userName, $userId);
+                $transactions = $collection->getTransactions();
+                $view = new View('transactionIndex');
+                echo $view->addData('transactions', $transactions)->render();
+            } catch (BankException $ex) {
+                $view = new View('exception');
+                echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                if ($ex->getCode() == 9) {
+                    $_SESSION['noAcc'] = true;
+                    $this->redirect('accountCreate');
+                } else {
+                    $view = new View('exception');
+                    echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                }
+            }
+        } else {
+            $this->redirect('Home');
+        }
     }
+
+
+
 }

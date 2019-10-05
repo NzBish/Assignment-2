@@ -108,7 +108,7 @@ class AccountController extends Controller
             echo $view->addData('accountId', $id)->render();
         } else {
             $view = new View('exception');
-            echo $view->addData("exception", (new BankException(99,"Please contact us by phone to close an account")))->addData("back", "accountIndex")->render();
+            echo $view->addData("exception", (new BankException(99,"Closing account via internet banking unavailable. Please contact us by phone to close an account")))->addData("back", "accountIndex")->render();
         }
     }
 
@@ -159,8 +159,13 @@ class AccountController extends Controller
         if (isset($_POST['withdraw'])) {
             try {
                 $account = (new AccountModel())->load($id);
-                $account->withdraw($_POST['withdrawalAmount']);
-                $account->save();
+                $withdrawalAmount = $_POST['withdrawalAmount'];
+                if($withdrawalAmount <= $account->getBalance()) {
+                    $account->withdraw($_POST['withdrawalAmount']);
+                    $account->save();
+                }else{
+                    throw new BankException(99,"You can't withdraw more than than your balance");
+                }
                 if (!$account) {
                     throw new BankException(0);
                 }

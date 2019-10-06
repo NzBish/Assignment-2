@@ -40,7 +40,8 @@ class TransactionModel extends Model
     private $accountID;
 
     /**
-     * getter for trans id
+     * Get Transaction ID
+     *
      * @return int Transaction ID
      */
     public function getId()
@@ -49,7 +50,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * getter for type
+     * Get Transaction type
+     *
      * @return string Transaction type
      */
     public function getType()
@@ -58,7 +60,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * setter for type
+     * Set Transaction type
+     *
      * @param string $type The new type for the transaction
      * @return $this A TransactionModel
      */
@@ -69,7 +72,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * getter for amount
+     * Get Transaction amount
+     *
      * @return float Transaction amount
      */
     public function getAmount()
@@ -78,7 +82,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * setter for amount
+     * Set Transaction amount
+     *
      * @param float $amount The new amount for the transaction
      * @return $this A TransactionModel
      */
@@ -89,7 +94,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * getter fort datetime
+     * Get date of Transaction
+     *
      * @return string Date / Time of transaction
      */
     public function getDateTime()
@@ -98,7 +104,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * setter for datetime
+     * Set date of Transaction
+     *
      * @param string $date The new date / time of the transaction
      * @return $this A TransactionModel
      */
@@ -109,7 +116,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * getter for account id
+     * Get Account ID
+     *
      * @return int Account ID
      */
     public function getAccountId()
@@ -118,7 +126,8 @@ class TransactionModel extends Model
     }
 
     /**
-     * setter for account id
+     * Set Account ID
+     *
      * @param string $account The new account ID for the transaction
      * @return $this A TransactionModel
      */

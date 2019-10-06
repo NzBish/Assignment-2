@@ -169,7 +169,7 @@ class Model
     }
 
     /**
-     * Function to retrieve database
+     * Get DB connection
      *
      * @return mixed Either a mysqli database connection or NULL
      */

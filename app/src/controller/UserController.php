@@ -21,19 +21,32 @@ class UserController extends Controller
 
     /**
      * User Index action
-     * @throws BankException
+     *
+     * If the user is logged in as "admin":
+     * - Creates and uses a UserCollectionModel object to create a UserModel generator
+     * - Creates and renders a userIndex template with the UserModel generator attached
+     * Otherwise redirects to:
+     * - UserController::loginAction if there is no user logged in
+     * - AccountController::indexAction if the logged in user is not "admin"
+     *
+     * @uses $_SESSION['userName'] to determine if the logged in user is "admin"
      */
     public function indexAction()
     {
         session_start();
         if (isset($_SESSION['userName'])) {
             if ($_SESSION['userName'] == "admin") {
-                $collection = new UserCollectionModel();
-                $users = $collection->getUsers();
-                $view = new View('userIndex');
-                echo $view->addData('users', $users)->render();
+                try {
+                    $collection = new UserCollectionModel();
+                    $users = $collection->getUsers();
+                    $view = new View('userIndex');
+                    echo $view->addData('users', $users)->render();
+                } catch (BankException $ex) {
+                    $view = new View('exception');
+                    echo $view->addData("exception", $ex)->addData("back", "Home")->render();
+                }
             } else {
-                $this->redirect('accountIndex'); // No other user should be able to get here but redirect anyway
+                $this->redirect('accountIndex');
             }
         } else {
             $this->redirect('userLogin');
@@ -42,6 +55,17 @@ class UserController extends Controller
 
     /**
      * User Login action
+     *
+     * Either:
+     * - Creates and renders a userLogin template to be filled by the user
+     * or:
+     * - Uses provided form data to create a UserModel and determine if correct credentials were provided
+     * - If yes, begins a session and sets $_SESSION['userName'] $_SESSION['userId'] and $_SESSION['userFull']
+     *   to values obtained from the UserModel
+     *
+     * @uses $_POST['login'] to determine whether to begin a session or create a userLogin
+     * @uses $_POST['userName'] to set $user->load($name) and $_SESSION['userName']
+     * @uses $_POST['password'] to determine if correct credentials have been provided
      */
     public function loginAction()
     {
@@ -71,6 +95,11 @@ class UserController extends Controller
 
     /**
      * User Logout action
+     *
+     * If there is a user logged in, destroys their session
+     * Otherwise redirects to HomeController::indexAction
+     *
+     * @uses $_SESSION['userName'] to determine if a user is logged in
      */
     public function logoutAction()
     {
@@ -84,6 +113,21 @@ class UserController extends Controller
 
     /**
      * User Create action
+     *
+     * Either:
+     * - Creates and renders a userCreate template to be filled by the user
+     * or:
+     * - Creates a new UserModel based on the provided form data, begins a session if the UserModel
+     *   was successfully added to the User table, and redirects to AccountController::indexAction
+     *
+     * @uses $_POST['create'] to determine whether to create a UserModel or a userCreate
+     * @uses $_POST['userName'] to set $user->userName
+     * @uses $_POST['firstName'] to set $user->firstName
+     * @uses $_POST['lastName'] to set $user->lastName
+     * @uses $_POST['password'] to set $user->password
+     * @uses $_POST['email'] to set $user->email
+     * @uses $_POST['phone'] to set $user->phone
+     * @uses $_POST['dob'] to set $user->dateOfBirth
      */
     public function createAction()
     {

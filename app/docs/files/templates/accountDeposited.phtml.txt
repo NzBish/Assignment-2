@@ -1,0 +1,28 @@
+<?php include "header.phtml" ?>
+    <!---------- Body starts --------------->
+
+    <br>
+    <div>
+        <p>Successfully deposited $<?= $amount ?></p>
+        <p>New balance:</p>
+        <table>
+            <tr>
+                <th>Account ID</th>
+                <th>Account Type</th>
+                <th>Account Balance</th>
+                <th>Date Started</th>
+            </tr>
+            <tr>
+                <td><?= $account->getId() ?></td>
+                <td><?= $account->getType() ?></td>
+                <td><span class = "dollars"><?= $account->getBalance() ?></span></td>
+                <td><?= $account->getDateStarted() ?></td>
+            </tr>
+        </table>
+        <br>
+        <a class='prettybutton' href=<?= $linkTo('accountIndex'); ?>>Back to Accounts</a>
+    </div>
+    <br>
+
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

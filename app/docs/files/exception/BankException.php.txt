@@ -1,0 +1,65 @@
+<?php
+
+namespace ktc\a2\Exception;
+
+/**
+ * Class BankException
+ *
+ * @package ktc/a2
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
+ */
+
+class BankException extends \Exception
+{
+    /**
+     * BankException constructor
+     *
+     * Creates a BankException and sets $message if $code is a known error
+     *
+     * @param int $code Sets $code in the created object
+     * @param string $message Sets $message in the created object
+     */
+    public function __construct($code = 0, $message = "")
+    {
+        switch ($code) {
+            case 0:
+                $message = 'Failed to load account';
+                break;
+            case 1:
+                $message = 'Invalid Transaction Type';
+                break;
+            case 2:
+                $message = 'Invalid Amount';
+                break;
+            case 3:
+                $message = 'Insufficient Balance';
+                break;
+            case 4:
+                $message = 'Invalid username or password';
+                break;
+            case 5:
+                $message = 'Username already exists';
+                break;
+            case 6:
+                $message = 'Failed to hash entered password';
+                break;
+            case 7:
+                $message = 'Failed to create user';
+                break;
+            case 8:
+                $message = 'User is not logged in';
+                break;
+            case 9:
+                $message = 'You don\'t have any accounts yet';
+                break;
+            default:
+                $code = 99;
+                break;
+        }
+
+        parent::__construct($message, $code);
+    }
+}
+

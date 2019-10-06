@@ -169,6 +169,8 @@ class Model
     }
 
     /**
+     * Get DB connection
+     *
      * @return mixed Either a mysqli database connection or NULL
      */
     public function getDb()

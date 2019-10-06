@@ -1,0 +1,13 @@
+<?php include "header.phtml" ?>
+    <!---------- Body starts --------------->
+
+    <br>
+    <div>
+        <p>Error: <?php echo $exception->getMessage(); ?></p>
+        <br>
+        <a class='prettybutton' href=<?= $linkTo($back); ?>>Back</a>
+    </div>
+    <br>
+
+    <!---------- Body ends -------------------->
+<?php include "footer.phtml" ?>

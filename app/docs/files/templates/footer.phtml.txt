@@ -1,0 +1,18 @@
+<!---------- Foooter starts --------------->
+<br>
+<footer>
+    <div class="connect">
+        <div>
+            <h1>Connect with Us on</h1>
+            <div>
+                <a href="http://www.facebook.com" class="facebook">facebook</a>
+                <a href="http://www.twitter.com" class="twitter">twitter</a>
+                <a href="http://pinterest.com" class="pinterest">pinterest</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+<!---------- Foooter ends --------------->
+

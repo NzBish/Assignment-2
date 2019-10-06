@@ -1,0 +1,28 @@
+<!---------- Header starts --------------->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KTC Banking</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/site.css">
+</head>
+<body>
+<header>
+    <h1>KTC BANKING</h1>
+    <div class="header-right">
+        <?php if (isset($_SESSION['userName'])) { ?>
+        <p>Welcome <?php echo $_SESSION['userName'] ?></p>
+        <?php } ?>
+        <a href=<?= $linkTo('Home') ?>>Home</a>
+        <?php if (isset($_SESSION['userName'])) { ?>
+        <a href= <?= $linkTo('userLogout') ?> >Log out</a>
+        <a href= <?= $linkTo('accountIndex') ?> >Accounts</a>
+        <?php if ($_SESSION['userName'] == "admin") { ?>
+        <a href= <?= $linkTo('transactionIndex') ?> >Transactions</a>
+        <a href= <?= $linkTo('userIndex') ?> >Users</a>
+        <?php } } ?>
+        <a href="mailto:ktc@ktc.com">Email Us</a>
+    </div>
+</header>
+<!---------- Header ends --------------->
+

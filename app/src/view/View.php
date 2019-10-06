@@ -31,6 +31,13 @@ class View
      */
     protected $data = array();
 
+    /**
+     * View constructor
+     *
+     * Constructs a View based on the template provided
+     *
+     * @param string $template Which template to construct
+     */
     public function __construct($template)
     {
         try {
@@ -50,11 +57,12 @@ class View
     }
 
     /**
+     * View add data
+     *
      * Adds a key/value pair to be available to phtml template
      *
      * @param string $key name of the data to be available
      * @param object $val value of the data to be available
-     *
      * @return $this View
      */
     public function addData($key, $val)
@@ -64,9 +72,11 @@ class View
     }
 
     /**
-     * Render the template, returning it's content.
+     * View render
      *
-     * @return string The rendered template.
+     * Render the template, returning its content
+     *
+     * @return string The rendered template
      */
     public function render()
     {

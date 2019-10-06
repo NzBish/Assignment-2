@@ -40,6 +40,8 @@ class TransactionModel extends Model
     private $accountID;
 
     /**
+     * Get Transaction ID
+     *
      * @return int Transaction ID
      */
     public function getId()
@@ -48,6 +50,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Get Transaction type
+     *
      * @return string Transaction type
      */
     public function getType()
@@ -56,6 +60,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Set Transaction type
+     *
      * @param string $type The new type for the transaction
      * @return $this A TransactionModel
      */
@@ -66,6 +72,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Get Transaction amount
+     *
      * @return float Transaction amount
      */
     public function getAmount()
@@ -74,6 +82,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Set Transaction amount
+     *
      * @param float $amount The new amount for the transaction
      * @return $this A TransactionModel
      */
@@ -84,6 +94,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Get date of Transaction
+     *
      * @return string Date / Time of transaction
      */
     public function getDateTime()
@@ -92,6 +104,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Set date of Transaction
+     *
      * @param string $date The new date / time of the transaction
      * @return $this A TransactionModel
      */
@@ -102,6 +116,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Get Account ID
+     *
      * @return int Account ID
      */
     public function getAccountId()
@@ -110,6 +126,8 @@ class TransactionModel extends Model
     }
 
     /**
+     * Set Account ID
+     *
      * @param string $account The new account ID for the transaction
      * @return $this A TransactionModel
      */

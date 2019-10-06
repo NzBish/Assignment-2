@@ -40,6 +40,8 @@ class AccountModel extends Model
     private $dateStarted;
 
     /**
+     * Get Account ID
+     *
      * @return int Account ID
      */
     public function getId()
@@ -48,6 +50,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Get Account type
+     *
      * @return string Account type
      */
     public function getType()
@@ -56,6 +60,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Set Account type
+     *
      * @param string $type The new type of the account
      * @return $this An AccountModel
      */
@@ -67,6 +73,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Get Account balance
+     *
      * @return float Account balance
      */
     public function getBalance()
@@ -75,6 +83,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Set Account balance
+     *
      * @param float $balance The new balance of the account
      * @return $this An AccountModel
      */
@@ -85,6 +95,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Get User ID
+     *
      * @return int User ID
      */
     public function getUser()
@@ -93,6 +105,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Set User ID
+     *
      * @param int $user The new user ID associated with the account
      * @return $this An AccountModel
      */
@@ -103,6 +117,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Get date Account started
+     *
      * @return string Date / Time account was opened
      */
     public function getDateStarted()
@@ -111,6 +127,8 @@ class AccountModel extends Model
     }
 
     /**
+     * Set date Account started
+     *
      * @return $this An AccountModel
      */
     public function setDateStarted()

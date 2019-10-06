@@ -55,6 +55,8 @@ class UserModel extends Model
     private $dateOfBirth;
 
     /**
+     * Get User ID
+     *
      * @return int User ID
      */
     public function getId()
@@ -63,6 +65,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get username
+     *
      * @return string Username
      */
     public function getUserName()
@@ -71,6 +75,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set username
+     *
      * @param string $userName The new username
      * @return $this A UserModel
      */
@@ -82,6 +88,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get User first name
+     *
      * @return string User first name
      */
     public function getFirstName()
@@ -90,6 +98,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set User first name
+     *
      * @param string $firstName The new first name for the user
      * @return $this A UserModel
      */
@@ -101,6 +111,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get User last name
+     *
      * @return string User last name
      */
     public function getLastName()
@@ -109,6 +121,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set User last name
+     *
      * @param string $lastName The new last name for the user
      * @return $this A UserModel
      */
@@ -119,6 +133,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get password
+     *
      * @return string BCRYPT password
      */
     public function getPassword()
@@ -127,6 +143,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set password
+     *
      * @param string $password The new BCRYPT password
      * @return $this A UserModel
      */
@@ -137,6 +155,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get User email address
+     *
      * @return string User email address
      */
     public function getEmail()
@@ -145,6 +165,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set User email address
+     *
      * @param string $email The new email address for the user
      * @return $this A UserModel
      */
@@ -155,6 +177,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get User phone number
+     *
      * @return string User phone number
      */
     public function getPhone()
@@ -163,6 +187,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set User phone number
+     *
      * @param string $phone The new phone number for the user
      * @return $this A UserModel
      */
@@ -173,6 +199,8 @@ class UserModel extends Model
     }
 
     /**
+     * Get User date of birth
+     *
      * @return string User date of birth
      */
     public function getDateOfBirth()
@@ -181,6 +209,8 @@ class UserModel extends Model
     }
 
     /**
+     * Set User date of birth
+     *
      * @param string $date The new date of birth for the user
      * @return $this A UserModel
      */

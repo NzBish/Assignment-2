@@ -11,14 +11,28 @@ use ktc\a2\Exception\BankException;
  * @author  K. Dempsey
  * @author  T. Crompton
  * @author  C. Bishop
- *
  */
 class AccountCollectionModel extends Model
 {
+    /**
+     * @var array Contains account IDs for lookup in AccountCollectionModel::getAccounts
+     */
     private $accountIds;
 
+    /**
+     * @var int The number of indices in $accountIds
+     */
     private $N;
 
+    /**
+     * AccountCollectionModel constructor
+     *
+     * Creates an AccountCollectionModel, which is used to create a generator for AccountModels
+     *
+     * @param $userName Used to determine if there is a logged in user and if that user is "admin"
+     * @param $userId Used in the query for non-admin users to collect only their accounts
+     * @throws BankException on database connection errors or lack of accounts for the specified user
+     */
     public function __construct($userName, $userId)
     {
         parent::__construct();
@@ -46,9 +60,13 @@ class AccountCollectionModel extends Model
     }
 
     /**
-     * Get account collection
+     * Get accounts
      *
+     * A generator function yielding one AccountModel per ID in $accountIds
+     *
+     * @uses \ktc\a2\model\AccountCollectionModel::$accountIds to create AccountModels
      * @return \Generator|AccountModel[] Accounts
+     * @throws BankException via AccountModel->load
      */
     public function getAccounts()
     {

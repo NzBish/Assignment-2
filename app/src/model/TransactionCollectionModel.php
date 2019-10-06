@@ -1,8 +1,6 @@
 <?php
 namespace ktc\a2\model;
 
-
-
 use ktc\a2\Exception\BankException;
 
 /**
@@ -16,10 +14,25 @@ use ktc\a2\Exception\BankException;
  */
 class TransactionCollectionModel extends Model
 {
+    /**
+     * @var array Contains transaction IDs for lookup in TransactionCollectionModel::getTransactions
+     */
     private $transIds;
 
+    /**
+     * @var int The number of indices in $transIds
+     */
     private $N;
 
+    /**
+     * TransactionCollectionModel constructor
+     *
+     * Creates a TransactionCollectionModel, which is used to create a generator for TransactionModels
+     *
+     * @param $userName Used to determine if there is a logged in user and if that user is "admin"
+     * @param $userId Used in the query for non-admin users to collect only their transactions
+     * @throws BankException on database connection errors or lack of transactions for the specified user
+     */
     public function __construct($userName, $userId)
     {
         parent::__construct();
@@ -51,7 +64,15 @@ class TransactionCollectionModel extends Model
         $this->N = $result->num_rows;
     }
 
-
+    /**
+     * Get transactions
+     *
+     * A generator function yielding one TransactionModel per ID in $transIds
+     *
+     * @uses \ktc\a2\model\TransactionCollectionModel::$transIds to create TransactionModels
+     * @return \Generator|TransactionModel[] Transactions
+     * @throws BankException via TransactionModel->load
+     */
     public function getTransactions()
     {
         foreach ($this->transIds as $id) {

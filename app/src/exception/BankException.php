@@ -13,11 +13,14 @@ namespace ktc\a2\Exception;
 
 class BankException extends \Exception
 {
-    public function bankException($message)
-    {
-        parent::__construct($message);
-    }
-
+    /**
+     * BankException constructor
+     *
+     * Creates a BankException and sets $message if $code is a known error
+     *
+     * @param int $code Sets $code in the created object
+     * @param string $message Sets $message in the created object
+     */
     public function __construct($code = 0, $message = "")
     {
         switch ($code) {

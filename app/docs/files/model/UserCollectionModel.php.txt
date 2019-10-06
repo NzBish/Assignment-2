@@ -14,10 +14,23 @@ use ktc\a2\Exception\BankException;
  */
 class UserCollectionModel extends Model
 {
+    /**
+     * @var array Contains user IDs for lookup in UserCollectionModel::getUsers
+     */
     private $userNames;
 
+    /**
+     * @var int The number of indices in $userNames
+     */
     private $N;
 
+    /**
+     * UserCollectionModel constructor
+     *
+     * Creates a UserCollectionModel, which is used to create a generator for UserModels
+     *
+     * @throws BankException on database connection errors or lack of users in the User table
+     */
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +44,15 @@ class UserCollectionModel extends Model
         $this->N = $result->num_rows;
     }
 
-
+    /**
+     * Get users
+     *
+     * A generator function yielding one UserModel per ID in $userNames
+     *
+     * @uses \ktc\a2\model\UserCollectionModel::$userNames to create UserModels
+     * @return \Generator|UserModel[] Users
+     * @throws BankException via UserModel->load
+     */
     public function getUsers()
     {
         foreach ($this->userNames as $name) {

@@ -10,11 +10,26 @@ use ktc\a2\view\View;
  *
  * @package ktc/a2
  * @author  Andrew Gilman <a.gilman@massey.ac.nz>
+ * @author  K. Dempsey
+ * @author  T. Crompton
+ * @author  C. Bishop
  */
 
 class TransactionController extends Controller
 {
 
+    /**
+     * Transaction Index action
+     *
+     * If the user is logged in:
+     * - Creates and uses a TransactionCollectionModel object based on provided username and ID
+     *   to create a TransactionModel generator
+     * - Creates and renders a transactionIndex template with the TransactionModel generator attached
+     * Otherwise redirects to HomeController::indexAction
+     *
+     * @uses $_SESSION['userName'] to determine if user is logged in and set $userName
+     * @uses $_SESSION['userId'] to set $userId
+     */
     public function indexAction()
     {
         session_start();

@@ -14,32 +14,66 @@ use ktc\a2\Exception\BankException;
  */
 class UserModel extends Model
 {
+    /**
+     * @var int User ID
+     */
     private $id;
 
+    /**
+     * @var string Username
+     */
     private $userName;
 
+    /**
+     * @var string User first name
+     */
     private $firstName;
 
+    /**
+     * @var string User last name
+     */
     private $lastName;
 
+    /**
+     * @var string BCRYPT password
+     */
     private $password;
 
+    /**
+     * @var string User email address
+     */
     private $email;
 
+    /**
+     * @var string User phone number
+     */
     private $phone;
 
+    /**
+     * @var string User date of birth
+     */
     private $dateOfBirth;
 
+    /**
+     * @return int User ID
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * @return string Username
+     */
     public function getUserName()
     {
         return $this->userName;
     }
 
+    /**
+     * @param string $userName The new username
+     * @return $this A UserModel
+     */
     public function setUserName($userName)
     {
         $this->userName = mysqli_real_escape_string($this->db, $userName);
@@ -47,11 +81,18 @@ class UserModel extends Model
         return $this;
     }
 
+    /**
+     * @return string User first name
+     */
     public function getFirstName()
     {
         return $this->firstName;
     }
 
+    /**
+     * @param string $firstName The new first name for the user
+     * @return $this A UserModel
+     */
     public function setFirstName($firstName)
     {
         $this->firstName = mysqli_real_escape_string($this->db, $firstName);
@@ -59,73 +100,125 @@ class UserModel extends Model
         return $this;
     }
 
+    /**
+     * @return string User last name
+     */
     public function getLastName()
     {
         return $this->lastName;
     }
 
+    /**
+     * @param string $lastName The new last name for the user
+     * @return $this A UserModel
+     */
     public function setLastName($lastName)
     {
         $this->lastName = mysqli_real_escape_string($this->db, $lastName);
         return $this;
     }
 
+    /**
+     * @return string BCRYPT password
+     */
     public function getPassword()
     {
         return $this->password;
     }
 
+    /**
+     * @param string $password The new BCRYPT password
+     * @return $this A UserModel
+     */
     public function setPassword($password)
     {
         $this->password = $password;
         return $this;
     }
 
+    /**
+     * @return string User email address
+     */
     public function getEmail()
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email The new email address for the user
+     * @return $this A UserModel
+     */
     public function setEmail($email)
     {
         $this->email = mysqli_real_escape_string($this->db, $email);
-
         return $this;
     }
 
+    /**
+     * @return string User phone number
+     */
     public function getPhone()
     {
         return $this->phone;
     }
 
+    /**
+     * @param string $phone The new phone number for the user
+     * @return $this A UserModel
+     */
     public function setPhone($phone)
     {
         $this->phone = mysqli_real_escape_string($this->db, $phone);
-
         return $this;
     }
 
+    /**
+     * @return string User date of birth
+     */
     public function getDateOfBirth()
     {
         return $this->dateOfBirth;
     }
 
+    /**
+     * @param string $date The new date of birth for the user
+     * @return $this A UserModel
+     */
     public function setDateOfBirth($date)
     {
         $this->dateOfBirth = mysqli_real_escape_string($this->db, $date);
-
         return $this;
     }
 
+    /**
+     * User check
+     *
+     * Checks if a username is already present in the database
+     *
+     * @param string $name Username
+     * @return bool True if the specified username is already present
+     * @throws BankException on database errors
+     */
     public function check($name)
     {
-        $result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';");
+        if (!$result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';")) {
+            throw new BankException(99, 'DB query failed: ' . mysqli_error($this->db));
+        }
         if ($result->num_rows < 1) {
             return false;
         }
         return true;
     }
 
+    /**
+     * User load
+     *
+     * Loads user information from the database into this UserModel
+     *
+     * @param string $name Username
+     * @return $this A UserModel
+     * @throws BankException on database connection errors
+     */
     public function load($name)
     {
         if (!$result = $this->db->query("SELECT * FROM `user` WHERE `user_name` = '$name';")) {
@@ -151,6 +244,14 @@ class UserModel extends Model
         return $this;
     }
 
+    /**
+     * User save
+     *
+     * Saves user information from this UserModel into the database
+     *
+     * @return $this A UserModel
+     * @throws BankException on database connection errors
+     */
     public function save()
     {
         $id = $this->id;

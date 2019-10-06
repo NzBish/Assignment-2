@@ -15,8 +15,19 @@ use ktc\a2\exception\BankException;
  */
 class Model
 {
+    /**
+     * @var mysqli Database connection
+     */
     protected $db;
 
+    /**
+     * Model constructor
+     *
+     * Sets the database connection variables via an external file
+     * Creates the database if not already created
+     *
+     * @throws BankException on database connection errors
+     */
     public function __construct()
     {
         $envs = getenv();
@@ -31,13 +42,13 @@ class Model
         );
 
         if (!$this->db) {
-            throw new BankException($this->db->connect_error);
+            throw new BankException(99,$this->db->connect_error);
         }
 
-
-        //----------------------------------------------------------------------------
-        // This is to make our life easier
-        // Create your database and populate it with sample data
+        /**
+         * This is to make our life easier
+         * Create your database and populate it with sample data
+         */
         $this->db->query("CREATE DATABASE IF NOT EXISTS $dbName;");
 
         if (!$this->db->select_db($dbName)) {
@@ -45,8 +56,7 @@ class Model
             throw new BankException("Mysql database not available!");
         }
 
-        //defining strings for table creation
-
+        /** Defining strings for table creation */
         $databaseUser = "CREATE TABLE `user` (
                                         `user_id` INT NOT NULL AUTO_INCREMENT, 
                                         `user_name` VARCHAR(30) UNIQUE NOT NULL,
@@ -78,13 +88,21 @@ class Model
                                         CONSTRAINT FK_account FOREIGN KEY (account_id) 
                                         REFERENCES account(account_id) ON DELETE CASCADE);";
 
-
-
         $this->buildTable('user', $databaseUser);
         $this->buildTable('account', $databaseAccount);
         $this->buildTable('transaction', $databaseTransaction);
         $this->buildTableData();
     }
+
+    /**
+     * Model table builder
+     *
+     * If not already present, creates a table based on a provided query
+     *
+     * @param string $tableName The name of the table to be created
+     * @param string $table The full query creating the table
+     * @throws BankException on database connection errors
+     */
     public function buildTable($tableName, $table)
     {
         $result = $this->db->query("SHOW TABLES LIKE '$tableName';");
@@ -95,20 +113,28 @@ class Model
             $result = $this->db->query($table);
             if (!$result) {
                 // handle appropriately
-                throw new BankException("Failed creating table " . $tableName);
+                throw new BankException(99, "Failed creating table " . $tableName);
             }
         }
     }
+
+    /**
+     * Model table data builder
+     *
+     * If not already present, inserts sample data into the User, Account, and Transaction tables
+     *
+     * @throws BankException on database connection errors
+     */
     public function buildTableData()
     {
         if (!$password = password_hash("1111", PASSWORD_BCRYPT)) {
-            throw new BankException("Failed to hash entered password");
+            throw new BankException(99,"Failed to hash entered password");
         }
         if (!$admin = password_hash("admin", PASSWORD_BCRYPT)) {
-            throw new BankException("Failed to hash entered password");
+            throw new BankException(99,"Failed to hash entered password");
         }
 
-        //strings to insert data
+        /** Strings to insert */
         $insertUser = "INSERT INTO `user` VALUES (NULL, 'admin', 'Administrator', '', '$admin',
                                                  'admin@ktc.com', 'Call KTC instead', '1970-01-01'),
                                                  (NULL, 'CBishop', 'Chris', 'Bishop', '$password',
@@ -126,28 +152,24 @@ class Model
                                                                (NULL,'Withdraw',40,'2019-10-04 10:42:16',3),
                                                                (NULL,'Deposit',50,'2019-10-04 10:42:16',4);";
 
-
-         //check if already inserted
+         /** Check if already inserted */
         $result = $this->db->query("SELECT * FROM `user`;");
 
         if ($result->num_rows == 0) {
             if (!$this->db->query($insertUser)) {
-                // handle appropriately
                 throw new BankException(99, "Failed creating sample user data! " . mysqli_error($this->db));
             }
             if (!$this->db->query($insertAccount)) {
-                // handle appropriately
                 throw new BankException(99, "Failed creating sample account data! " . mysqli_error($this->db));
             }
             if (!$this->db->query($insertTransaction)) {
-                // handle appropriately
                 throw new BankException(99, "Failed creating sample transaction data! " . mysqli_error($this->db));
             }
         }
     }
 
     /**
-     * @return mixed
+     * @return mixed Either a mysqli database connection or NULL
      */
     public function getDb()
     {
